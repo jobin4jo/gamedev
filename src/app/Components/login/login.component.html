@@ -1,0 +1,37 @@
+<!-- login.component.html -->
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4 w-100" style="max-width: 400px;">
+    <h3 class="onam-heading">Welcome to the Onam Games organized by MCYM Unit,Pushpagiri</h3><hr>
+
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <div class="mb-3">
+        <label>UserName</label>
+        <input type="text" class="form-control" formControlName="UserName">
+        <div class="text-danger" *ngIf="loginForm.get('UserName')?.touched && loginForm.get('UserName')?.invalid">
+          <small *ngIf="loginForm.get('UserName')?.errors?.['required']">UserName is required.</small>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div class="text-danger" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Minimum 6 characters.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="btn onam-btn" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+    <hr>
+    <div class="developed-by">
+    Developed by <strong>Jo4Tech Solutions</strong>
+</div>
+  </div>
+</div>

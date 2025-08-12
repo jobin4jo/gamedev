@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-image: url('assets/7494064.jpg');
+  background-size: cover;       /* Fill screen */
+  background-position: center;  /* Center the image */
+  background-repeat: no-repeat; /* Avoid tiling */
+  height: 100vh;                 /* Full height */
+  margin: 0;
+}
