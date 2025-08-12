@@ -1,1 +1,102 @@
-<p>admindashboard works!</p>
+<div class="container-fluid p-3">
+    <div class="card shadow-sm p-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+            <h4>Welcome, Admin!</h4>
+            <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-pills mb-3 flex-wrap">
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="selectedTab === 'managers'" (click)="selectTab('managers')">Managers
+                    Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="selectedTab === 'users'" (click)="selectTab('users')">Users
+                    Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="selectedTab === 'leaderboard'"
+                    (click)="selectTab('leaderboard')">Leaderboard</a>
+            </li>
+        </ul>
+
+        <!-- Managers Management -->
+        <div *ngIf="selectedTab === 'managers'">
+            <h5>Managers Management</h5>
+            <form class="row g-2 mb-3">
+                <div class="col-12 col-md-4">
+                    <input type="text" class="form-control" placeholder="Username" [(ngModel)]="newManager.username"
+                        name="username">
+                </div>
+                <div class="col-12 col-md-4">
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="newManager.password"
+                        name="password">
+                </div>
+                <div class="col-12 col-md-4">
+                    <select class="form-select" [(ngModel)]="newManager.game" name="game">
+                        <option *ngFor="let game of games">{{game}}</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary w-100" (click)="addManager()">Add Manager</button>
+                </div>
+            </form>
+
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                    *ngFor="let m of managers">
+                    {{m.username}} - {{m.game}}
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-warning">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Users Overview -->
+        <div *ngIf="selectedTab === 'users'" class="table-responsive">
+            <h5>Users Overview</h5>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Scores (G1-G5)</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let u of users">
+                        <td>{{u.name}}</td>
+                        <td>{{u.phone}}</td>
+                        <td>{{u.scores.join(', ')}}</td>
+                        <td>{{u.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Leaderboard -->
+        <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">
+            <h5>Leaderboard</h5>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Total Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let l of leaderboard; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{l.name}}</td>
+                        <td>{{l.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
