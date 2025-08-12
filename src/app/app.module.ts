@@ -7,6 +7,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdmindashboardComponent } from './Components/admindashboard/admindashboard.component';
 import { GamemanagerdashboardComponent } from './Components/gamemanagerdashboard/gamemanagerdashboard.component';
+import { RegisterationDashboardComponent } from './Components/registeration-dashboard/registeration-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { GamemanagerdashboardComponent } from './Components/gamemanagerdashboard
     LoginComponent,
     AdmindashboardComponent,
     GamemanagerdashboardComponent,
+    RegisterationDashboardComponent,
   ],
   imports: [
     BrowserModule,

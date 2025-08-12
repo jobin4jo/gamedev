@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/login/login.component';
 import { GamemanagerdashboardComponent } from './Components/gamemanagerdashboard/gamemanagerdashboard.component';
+import { RegisterationDashboardComponent } from './Components/registeration-dashboard/registeration-dashboard.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'manager', component:GamemanagerdashboardComponent},
+  {path:"register",component:RegisterationDashboardComponent}
 ];
 
 @NgModule({
