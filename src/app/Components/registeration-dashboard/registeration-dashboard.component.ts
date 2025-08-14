@@ -16,7 +16,6 @@ export class RegisterationDashboardComponent {
     this.playerForm = this.fb.group({
       playerName: ['', Validators.required],
       place: ['', Validators.required],
-      amountPaid: ['', Validators.required]
     });
   }
 

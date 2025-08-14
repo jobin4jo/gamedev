@@ -19,7 +19,21 @@
                 <a class="nav-link" [class.active]="selectedTab === 'leaderboard'"
                     (click)="selectTab('leaderboard')">Leaderboard</a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link" [class.active]="selectedTab === 'playerRegister'"
+                    (click)="selectTab('playerRegister')">PlayerRegister</a>
+            </li>
+                <li class="nav-item">
+                <a class="nav-link"routerLink="/score-board"
+                   >Scoreboard</a>
+            </li>
         </ul>
+
+
+        <!-- player register -->
+        <div *ngIf="selectedTab === 'playerRegister'">
+            <app-registeration-dashboard></app-registeration-dashboard>
+        </div>
 
         <!-- Managers Management -->
         <div *ngIf="selectedTab === 'managers'">

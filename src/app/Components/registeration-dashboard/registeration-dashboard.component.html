@@ -33,34 +33,6 @@
             Place is required
           </div>
         </div>
-
-        <!-- Amount Paid -->
-        <div class="mb-3">
-          <label class="form-label">Amount Paid</label>
-          <div>
-            <div class="form-check form-check-inline">
-              <input type="radio"
-                     id="paidYes"
-                     value="Yes"
-                     formControlName="amountPaid"
-                     class="form-check-input">
-              <label for="paidYes" class="form-check-label">Yes</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input type="radio"
-                     id="paidNo"
-                     value="No"
-                     formControlName="amountPaid"
-                     class="form-check-input">
-              <label for="paidNo" class="form-check-label">No</label>
-            </div>
-          </div>
-          <div *ngIf="playerForm.get('amountPaid')?.touched && playerForm.get('amountPaid')?.invalid" 
-               class="text-danger small">
-            Please select an option
-          </div>
-        </div>
-
         <!-- Submit -->
         <div class="d-grid">
           <button type="submit" class="btn btn-warning text-white" [disabled]="playerForm.invalid">

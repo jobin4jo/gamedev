@@ -8,7 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdmindashboardComponent } from './Components/admindashboard/admindashboard.component';
 import { GamemanagerdashboardComponent } from './Components/gamemanagerdashboard/gamemanagerdashboard.component';
 import { RegisterationDashboardComponent } from './Components/registeration-dashboard/registeration-dashboard.component';
-
+import { ScoreboardComponent } from './Components/scoreboard/scoreboard.component';
+import { HttpClientModule } from  '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,12 +17,14 @@ import { RegisterationDashboardComponent } from './Components/registeration-dash
     AdmindashboardComponent,
     GamemanagerdashboardComponent,
     RegisterationDashboardComponent,
+    ScoreboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -30,6 +30,8 @@ export class AdmindashboardComponent {
     this.selectedTab = tab;
   }
 
+
+
   addManager() {
     if (this.newManager.username && this.newManager.password && this.newManager.game) {
       this.managers.push({ username: this.newManager.username, game: this.newManager.game });
