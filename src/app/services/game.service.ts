@@ -10,5 +10,8 @@ export class GameService {
 
   getScoreBoard() {
     return this.http.get(`${environment.PRODUCTION_URL}/users/players/sorted`);
+  } 
+  searchUser(query: string) {
+    return this.http.get(`${environment.PRODUCTION_URL}/users/players/search/${query}`);
   }
 }

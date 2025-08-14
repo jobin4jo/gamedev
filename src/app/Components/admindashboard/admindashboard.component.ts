@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admindashboard',
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./admindashboard.component.scss']
 })
 export class AdmindashboardComponent {
+
+  constructor(private route:Router){
+
+  }
+
  selectedTab: string = 'managers';
 
   newManager = { username: '', password: '', game: '' };
@@ -40,6 +46,6 @@ export class AdmindashboardComponent {
   }
 
   logout() {
-    alert('Logged out!');
+ this.route.navigate(['']);
   }
 }
