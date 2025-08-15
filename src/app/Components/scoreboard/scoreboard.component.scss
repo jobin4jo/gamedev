@@ -1,0 +1,54 @@
+.loading-bar {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(90deg, #d39d0a 25%, #d1c76a 50%, #d3cfae 75%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+  color: transparent;
+  -webkit-background-clip: text;
+  transition: background 0.3s ease;
+}
+
+.loading-bar:hover {
+  background: linear-gradient(90deg, #ffeb99 25%, #fff8dc 50%, #ffeb99 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+
+
+
+/* Hover → yellow shimmer moving right to left */
+.loading-bar1 {
+  font-size: 22px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(90deg, #d42424 25%, #cac3c3 50%, #ccc 75%);
+  background-size: 200% 100%;
+  animation: shimmer-left 3s infinite linear;
+  color: transparent;
+  -webkit-background-clip: text;
+  transition: background 0.3s ease, animation 0.3s ease;
+}
+
+/* Hover → red shimmer moving right to left */
+.loading-bar1:hover {
+  background: linear-gradient(270deg, #ff4d4d 25%, #ffe6e6 50%, #ff4d4d 75%);
+  background-size: 200% 100%;
+  animation: shimmer-right 1.5s infinite linear;
+}
+
+@keyframes shimmer-left {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes shimmer-right {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

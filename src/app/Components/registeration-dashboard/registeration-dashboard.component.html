@@ -5,17 +5,14 @@
     </div>
     <div class="card-body">
       <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
-        
+
         <!-- Player Name -->
         <div class="mb-3">
           <label for="playerName" class="form-label">Player Name</label>
-          <input type="text"
-                 id="playerName"
-                 formControlName="playerName"
-                 class="form-control"
-                 placeholder="Enter player name">
-          <div *ngIf="playerForm.get('playerName')?.touched && playerForm.get('playerName')?.invalid" 
-               class="text-danger small">
+          <input type="text" id="playerName" formControlName="playerName" class="form-control"
+            placeholder="Enter player name">
+          <div *ngIf="playerForm.get('playerName')?.touched && playerForm.get('playerName')?.invalid"
+            class="text-danger small">
             Player Name is required
           </div>
         </div>
@@ -23,13 +20,8 @@
         <!-- Place -->
         <div class="mb-3">
           <label for="place" class="form-label">Place</label>
-          <input type="text"
-                 id="place"
-                 formControlName="place"
-                 class="form-control"
-                 placeholder="Enter place">
-          <div *ngIf="playerForm.get('place')?.touched && playerForm.get('place')?.invalid" 
-               class="text-danger small">
+          <input type="text" id="place" formControlName="place" class="form-control" placeholder="Enter place">
+          <div *ngIf="playerForm.get('place')?.touched && playerForm.get('place')?.invalid" class="text-danger small">
             Place is required
           </div>
         </div>
@@ -39,7 +31,9 @@
             Submit
           </button>
         </div>
+
       </form>
+      <h5 *ngIf="isError" class="text-danger ">Please try again</h5>
     </div>
   </div>
 </div>
@@ -53,7 +47,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        Your Registration No is: <strong>{{ registrationNo }}</strong>
+        Your Registration No is: <strong>{{ playerResponse?.userNumber }}</strong>
+      </div>
+      <div class="modal-body">
+        Your Name is: <strong>{{ playerResponse?.user?.name }}</strong>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>

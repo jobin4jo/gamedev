@@ -17,4 +17,7 @@ export class GameService {
   UpdateScore(userNo: string, gameName: string, score: any) { 
     return this.http.put(`${environment.PRODUCTION_URL}/users/${userNo}/games/${gameName}`, { points: score });
   }
+    createPlayer(playerData: any) {
+    return this.http.post(`${environment.PRODUCTION_URL}/users`, playerData);
+  }
 }
