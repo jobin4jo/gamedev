@@ -11,3 +11,112 @@
     margin-top: 5px;
   }
 }
+
+
+
+/* === Festival Card Container === */
+.festival-card {
+  border: 3px solid orange;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff8e1, #ffe0b2);
+  box-shadow: 0 4px 8px rgba(255, 165, 0, 0.4);
+}
+
+/* === Header Title === */
+.festival-card h4 {
+  color: #e65100;
+  font-weight: bold;
+}
+
+/* === Logout Button Festival Style === */
+.logout-btn {
+  background: linear-gradient(90deg, #ef5350, #d32f2f);
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(90deg, #d32f2f, #b71c1c);
+}
+
+/* === Nav Pills Festival Style === */
+.nav-pills .nav-link {
+  background: #ffe082;
+  color: #e65100;
+  font-weight: bold;
+  margin: 2px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.nav-pills .nav-link.active {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  color: white;
+}
+
+/* === Form Controls Festival Border === */
+.festival-card .form-control,
+.festival-card .form-select {
+  border: 2px solid orange;
+  border-radius: 8px;
+}
+
+/* === Add Manager Button === */
+.btn-add-manager {
+  background: linear-gradient(90deg, #ffa726, #fb8c00);
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-add-manager:hover {
+  background: linear-gradient(90deg, #fb8c00, #ef6c00);
+}
+
+/* === Edit & Delete Buttons Matching Theme === */
+.btn-warning {
+  background: #ffca28;
+  color: #795548;
+  border: none;
+  font-weight: bold;
+}
+
+.btn-warning:hover {
+  background: #ffc107;
+}
+
+.btn-danger {
+  background: #ef5350;
+  border: none;
+}
+
+.btn-danger:hover {
+  background: #e53935;
+}
+
+/* === Leaderboard Table === */
+.table-hover thead {
+  background: linear-gradient(90deg, #ffb300, #ff6f00);
+  color: white;
+}
+
+.table-hover td,
+.table-hover th {
+  border: 1px solid orange;
+}
+
+/* === Mobile Responsive Fixes === */
+@media (max-width: 576px) {
+  .d-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nav-pills {
+    flex-direction: column;
+  }
+  .btn-add-manager,
+  .logout-btn {
+    width: 100%;
+  }
+}

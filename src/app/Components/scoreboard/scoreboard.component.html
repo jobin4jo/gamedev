@@ -1,5 +1,5 @@
 <div class="container-fluid p-3">
-    <div class="card shadow-sm p-3">
+    <div class="card festival-table shadow-sm p-3">
         <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
             <h4 class="loading-bar1">Happy Onam! May your life bloom with joy and prosperity</h4>
             <div class="loading-bar">Welcome to all, Good luck for your games </div>
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let player of players">
+                    <tr *ngFor="let player of players"  [ngClass]="player.rankClass">
                         <td>{{player.rank}}</td>
                         <td>{{player.name}}</td>
                         <td>{{player.place}}</td>

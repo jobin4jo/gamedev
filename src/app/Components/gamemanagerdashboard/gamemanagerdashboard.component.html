@@ -38,8 +38,8 @@
              (input)="onInputChange()"
             >
         </div>
-        <div class="col-12 col-md-3 d-grid">
-          <button class="btn onam-btn" (click)="onSearch()">Search</button>
+        <div  class="col-12 col-md-3 d-grid">
+          <button [disabled]="searchTerm.length ==0" class="btn onam-btn" (click)="onSearch()">Search</button>
         </div>
       </div>
 
