@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Modal } from 'bootstrap';
+import { GameService } from 'src/app/services/game.service';
 @Component({
   selector: 'app-registeration-dashboard',
   templateUrl: './registeration-dashboard.component.html',
   styleUrls: ['./registeration-dashboard.component.scss']
 })
 export class RegisterationDashboardComponent {
- playerForm!: FormGroup;
-  registrationNo: string = '';
+  playerForm!: FormGroup;
+  isError: boolean = false;
+  playerResponse!: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private player: GameService) { }
 
   ngOnInit(): void {
     this.playerForm = this.fb.group({
@@ -21,18 +23,28 @@ export class RegisterationDashboardComponent {
 
   onSubmit() {
     if (this.playerForm.valid) {
-      // Simulate backend call
-      this.registrationNo = Math.floor(Math.random() * 10000).toString();
-
-      // Show modal
-      const modalElement = document.getElementById('regModal');
-      if (modalElement) {
-        const modalInstance = new Modal(modalElement);
-        modalInstance.show();
-      }
-
-      // Reset form after submit
-      this.playerForm.reset();
+      let player = {
+        name: this.playerForm.value.playerName,
+        role: "player"
+        // place:this.playerForm.value.place
+      };
+      this.player.createPlayer(player).subscribe({
+        next: (response: any) => {
+          const modalElement = document.getElementById('regModal');
+          if (modalElement) {
+            const modalInstance = new Modal(modalElement);
+            modalInstance.show();
+          }
+          this.playerResponse = response;
+          this.playerForm.reset();
+        },
+        error: (err) => {
+          if (err) {
+            this.isError = true;
+            this.playerForm.reset();
+          }
+        }
+      });
     }
-}
+  }
 }

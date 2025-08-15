@@ -39,6 +39,7 @@
             Submit
           </button>
         </div>
+        <h5 *ngIf="isError" class="text-danger ">Please try again</h5>
       </form>
     </div>
   </div>
@@ -53,7 +54,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        Your Registration No is: <strong>{{ registrationNo }}</strong>
+        Your Registration No is: <strong>{{ playerResponse?.userNumber }}</strong>
+      </div>
+           <div class="modal-body">
+        Your Name is: <strong>{{ playerResponse?.user?.name }}</strong>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
