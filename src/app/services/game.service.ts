@@ -12,6 +12,9 @@ export class GameService {
     return this.http.get(`${environment.PRODUCTION_URL}/users/players/sorted`);
   } 
   searchUser(query: string) {
-    return this.http.get(`${environment.PRODUCTION_URL}/users/players/search/${query}`);
+    return this.http.get(`${environment.PRODUCTION_URL}/users/search/${query}`);
+  }
+  UpdateScore(userNo: string, gameName: string, score: number) { 
+    return this.http.put(`${environment.PRODUCTION_URL}/users/${userNo}/games/${gameName}`, { points: score });
   }
 }
