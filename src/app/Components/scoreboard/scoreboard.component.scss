@@ -52,3 +52,77 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* Card background festive theme */
+.festival-table {
+  background: linear-gradient(135deg, #fff3e0, #ffcc80);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+  border: 2px solid #ff9800;
+}
+
+/* Festive heading animation */
+.loading-bar1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff5722, #ffeb3b, #4caf50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: colorShift 4s linear infinite;
+}
+
+.loading-bar {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #ff5722;
+  animation: pulseText 2s infinite;
+}
+
+/* Table header */
+.table-primary {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Alternate row colors */
+.table-striped tbody tr:nth-child(odd) {
+  background-color: rgba(255, 245, 230, 0.9);
+}
+.table-striped tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Hover effect */
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 235, 59, 0.4);
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
+
+/* Top 3 ranks highlight */
+.rank-1 td {
+  background: gold !important;
+  font-weight: bold;
+}
+.rank-2 td {
+  background: silver !important;
+  font-weight: bold;
+}
+.rank-3 td {
+  background: #cd7f32 !important;
+  color: white;
+  font-weight: bold;
+}
+/* Animations */
+@keyframes colorShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes pulseText {
+  0%, 100% { color: #ff5722; }
+  50% { color: #4caf50; }
+}

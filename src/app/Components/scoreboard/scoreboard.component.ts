@@ -26,12 +26,17 @@ getPlayerDashBoard() {
 
     // Step 1: Transform players (add points array + status)
     let players = data.map((player: { games: { points: number }[], totalPoints: number }) => {
-      const points = player.games.map(g => g.points);
+       const points = player.games.map(g => g.points === null ? '-' : g.points);
 
+      // Status logic
       let status = '';
-      if (points.every(p => p === 0)) {
+      const onlyZeros = points.every(p => p === 0);           // all 0
+      const noNulls = points.every(p => p !== '-' && p !== 0); // all filled with non-zero
+      const allNullsOrZero = points.every(p => p === '-' || p === 0); // no positive points
+
+      if (allNullsOrZero) {
         status = 'Not Yet Played';
-      } else if (points.every(p => p !== 0)) {
+      } else if (noNulls) {
         status = 'Completed';
       } else {
         status = 'In Progress';
@@ -47,11 +52,20 @@ getPlayerDashBoard() {
     // Step 2: Sort by totalPoints in descending order
     players = players.sort((a:any, b:any) => b.totalPoints - a.totalPoints);
 
-    // Step 3: Add rank (1, 2, 3...) based on sorted order
-    players = players.map((player: any, index: number) => ({
-      ...player,
-      rank: index + 1
-    }));
+    let currentRank = 1;
+    let lastPoints = players[0]?.totalPoints;
+
+    players = players.map((player: any, index: number) => {
+      if (index > 0 && player.totalPoints !== lastPoints) {
+        currentRank++; // Move to next rank without skipping
+      }
+      lastPoints = player.totalPoints;
+      return {
+        ...player,
+        rank: currentRank,
+        rankClass: `rank-${currentRank}`
+      };
+    });
 
     this.players = players;
 
