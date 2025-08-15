@@ -12,10 +12,6 @@
                     Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [class.active]="selectedTab === 'users'" (click)="selectTab('users')">Users
-                    Overview</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" [class.active]="selectedTab === 'leaderboard'"
                     (click)="selectTab('leaderboard')">Leaderboard</a>
             </li>
@@ -69,28 +65,6 @@
             </ul>
         </div>
 
-        <!-- Users Overview -->
-        <div *ngIf="selectedTab === 'users'" class="table-responsive">
-            <h5>Users Overview</h5>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Scores (G1-G5)</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let u of users">
-                        <td>{{u.name}}</td>
-                        <td>{{u.phone}}</td>
-                        <td>{{u.scores.join(', ')}}</td>
-                        <td>{{u.total}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
         <!-- Leaderboard -->
         <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">

@@ -14,12 +14,13 @@
         <div class="table-responsive">
             <!-- <h5>Users Overview</h5> -->
             <table class="table table-bordered table-striped">
-                <thead class="table-dark">
+                <thead class="table-primary">
                     <tr>
                         <th>Rank</th>
                         <th>Name</th>
                         <th>Place</th>
                         <th>User Number</th>
+                        <th>Status</th>
                         <th>Scores (G1-G5)</th>
                         <th>Total</th>
                     </tr>
@@ -30,8 +31,9 @@
                         <td>{{player.name}}</td>
                         <td>{{player.place}}</td>
                         <td>{{player.userNumber}}</td>
-                        <td>{{player.scores}}</td>
-                        <td>{{player.total}}</td>
+                        <td>{{player.status}}</td>
+                        <td>{{player.points}}</td>
+                        <td>{{player.totalPoints}}</td>
                     </tr>
                 </tbody>
             </table>
