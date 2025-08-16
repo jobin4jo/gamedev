@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
   templateUrl: './admindashboard.component.html',
   styleUrls: ['./admindashboard.component.scss']
 })
-export class AdmindashboardComponent {
-
-  constructor(private route:Router){
-
+export class AdmindashboardComponent implements OnInit {
+  userName: any;
+  constructor(private route: Router) { }
+  ngOnInit(): void {
+    this.userName = localStorage.getItem('userName');
   }
-
- selectedTab: string = 'managers';
+  selectedTab: string = 'managers';
 
   newManager = { username: '', password: '', game: '' };
   games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
@@ -36,6 +36,11 @@ export class AdmindashboardComponent {
     this.selectedTab = tab;
   }
 
+  isOnlyEnableAdmin(): boolean {
+    const userName = localStorage.getItem('userName');
+    return userName === 'admin';
+  }
+
 
 
   addManager() {
@@ -46,6 +51,6 @@ export class AdmindashboardComponent {
   }
 
   logout() {
- this.route.navigate(['']);
+    this.route.navigate(['']);
   }
 }
