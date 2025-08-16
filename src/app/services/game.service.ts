@@ -10,14 +10,18 @@ export class GameService {
 
   getScoreBoard() {
     return this.http.get(`${environment.PRODUCTION_URL}/users/players/sorted`);
-  } 
+  }
   searchUser(query: string) {
     return this.http.get(`${environment.PRODUCTION_URL}/users/search/${query}`);
   }
-  UpdateScore(userNo: string, gameName: string, score: any) { 
+  UpdateScore(userNo: string, gameName: string, score: any) {
     return this.http.put(`${environment.PRODUCTION_URL}/users/${userNo}/games/${gameName}`, { points: score });
   }
-    createPlayer(playerData: any) {
+  createPlayer(playerData: any) {
     return this.http.post(`${environment.PRODUCTION_URL}/users`, playerData);
+  }
+
+  login(credentials: any) {
+    return this.http.post(`${environment.PRODUCTION_URL}/users/login`, credentials);
   }
 }

@@ -9,9 +9,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class GamemanagerdashboardComponent implements OnInit {
 
-  managerName = 'Manager1';
-  managedGame = 'Game1';
-
+  managerName: any;
+  managedGame: any;
   searchTerm = '';
   searchResults: any = [];
   searchClicked = false;
@@ -24,7 +23,8 @@ export class GamemanagerdashboardComponent implements OnInit {
   constructor(private user: GameService, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
-
+    this.managedGame = localStorage.getItem('GameType');
+    this.managerName = localStorage.getItem('userName');
   }
 
   onSearch() {

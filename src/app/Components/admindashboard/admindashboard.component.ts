@@ -39,6 +39,11 @@ export class AdmindashboardComponent implements OnInit {
     this.selectedTab = tab;
   }
 
+  isOnlyEnableAdmin(): boolean {
+    const userName = localStorage.getItem('userName');
+    return userName === 'admin';
+  }
+
 
 
   addManager() {
