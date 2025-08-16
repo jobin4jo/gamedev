@@ -78,6 +78,7 @@ export class GamemanagerdashboardComponent implements OnInit {
             modalInstance.show();
           }
           this.IsViewTable = false;
+          this.onSearch();
           this.loadingService.hide();
         },
         error: (err: any) => {

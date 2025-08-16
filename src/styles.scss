@@ -21,3 +21,29 @@ body::before {
   filter: blur(4px);   /* Adjust blur level */
   z-index: -1;         /* Keep it behind content */
 }
+/* styles.css */
+.festival-heading {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #ff7f50, #ff1493, #ffcc00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  letter-spacing: 1px;
+}
+
+.onam-btn {
+    background: linear-gradient(90deg, #ffcc00, #ff9933);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.onam-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+}
