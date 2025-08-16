@@ -31,7 +31,7 @@ getPlayerDashBoard() {
       // Status logic
       let status = '';
       const onlyZeros = points.every(p => p === 0);           // all 0
-     const noNulls = points.every(p => p !== '-' && p !== null ); // all filled with non-zero
+     const noNulls = points.every(p => p !== '-' && p != null ); // all filled with non-zero
       const allNullsOrZero = points.every(p => p === '-' ); // no positive points
 
       if (allNullsOrZero) {

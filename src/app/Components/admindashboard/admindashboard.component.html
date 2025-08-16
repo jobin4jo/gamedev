@@ -55,7 +55,7 @@
                 <div class="col-12 col-md-4">
                     <label for="game" class="form-label festival-label">Select Game</label>
                     <select id="game" class="form-select" [(ngModel)]="newManager.game" name="game">
-                        <option *ngFor="let game of games"  class="festival-option" [value]="game">{{ game }}</option>
+                        <option *ngFor="let game of games" class="festival-option" [value]="game">{{ game }}</option>
                     </select>
                 </div>
 
@@ -69,7 +69,7 @@
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">S.No</th>
                         <th scope="col">Username</th>
                         <th scope="col">Game</th>
                         <th scope="col" class="text-center">Actions</th>
@@ -99,9 +99,9 @@
 
         <!-- Leaderboard -->
         <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">
-            <h5>Leaderboard</h5>
-            <table class="table table-hover">
-                <thead class="table-dark">
+            <h5 class="festival-heading">Leaderboard</h5>
+            <!-- <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
                     <tr>
                         <th>Rank</th>
                         <th>Name</th>
@@ -110,12 +110,70 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let l of leaderboard; let i = index">
-                        <td>{{i + 1}}</td>
+                        <td>{{l.rank}}</td>
+                        <td>{{l.name}}</td>
+                        <td>{{l.total}}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Total Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let l of leaderboard" [ngClass]="{
+          'table-warning': l.rank === 1,  
+          'table-secondary': l.rank === 2,
+          'table-info': l.rank === 3       
+        }">
+                        <td>
+                            <i *ngIf="l.rank === 1" class="bi bi-trophy-fill text-warning"></i>
+                            <i *ngIf="l.rank === 2" class="bi bi-trophy-fill text-secondary"></i>
+                            <i *ngIf="l.rank === 3" class="bi bi-trophy-fill text-info"></i>
+                            {{l.rank}}
+                        </td>
                         <td>{{l.name}}</td>
                         <td>{{l.total}}</td>
                     </tr>
                 </tbody>
             </table>
+
+            <hr>
+            <!-- <div class="chart-container">
+                <h3 class="chart-title">Game Status</h3>
+                <div class="pie-chart"></div>
+                <ul class="legend">
+                    <li><span class="completed"></span> Completed </li>
+                    <li><span class="inprogress"></span> In Progress (5)</li>
+                    <li><span class="played"></span> Played (15)</li>
+                </ul>
+            </div> -->
+
+            <div class="chart-container p-3 shadow-sm rounded">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="chart-title m-0">Game Status</h3>
+                    <button class="btn btn-primary btn-sm" (click)="calculateGameStatus()">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </button>
+                </div>
+
+ 
+                 <div class="pie-chart" [ngStyle]="{'background': pieChartStyle}"></div>
+              
+
+                <ul class="legend list-unstyled mb-0">
+                    <li><span class="completed"></span> Completed ({{ status.completed }})</li>
+                    <li><span class="inprogress"></span> In Progress ({{ status.inProgress }})</li>
+                    <li><span class="notplayed"></span> Not Played ({{ status.notPlayed }})</li>
+                    <li><span class="played"></span> Played ({{ status.totalPlayed }})</li>
+                </ul>
+            </div>
+
+
         </div>
     </div>
 </div>
