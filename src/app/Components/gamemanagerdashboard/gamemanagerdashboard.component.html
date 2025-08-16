@@ -17,7 +17,7 @@
     <p class="card-text">
       You manage: <strong>{{ managedGame }}</strong>
     </p>
-    <button class="btn btn-danger btn-sm" routerLink="/">Logout</button>
+    <button class="btn btn-danger btn-sm" routerLink="/"> <i class="bi bi-box-arrow-left"></i> &nbsp;Logout</button>
   </div>
 </div>
 
@@ -39,7 +39,7 @@
             >
         </div>
         <div  class="col-12 col-md-3 d-grid">
-          <button [disabled]="searchTerm.length ==0" class="btn onam-btn" (click)="onSearch()">Search</button>
+          <button [disabled]="searchTerm.length ==0"  class="btn onam-btn" (click)="onSearch()"><i class="bi bi-search"></i> &nbsp; Search</button>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
         <tr *ngFor="let user of searchResults">
           <td>{{ user.name }}</td>
           <td>{{ user.userNumber }}</td>
-          <td><button class="btn btn-primary" (click)="onView(user)">View</button></td>
+          <td><button class="btn onam-btn" (click)="onView(user)"> <i class="bi bi-book"></i> &nbsp;View</button></td>
         </tr>
       </tbody>
     </table>
@@ -101,11 +101,11 @@
     </td>
       <td>
         <button
-        class="btn btn-success btn-sm"
+        class="btn onam-btn btn-sm"
         (click)="updateScore()"
         [disabled]="currentGameScore !== null "
       >
-        Update
+        <i class="bi bi-pencil-square"></i> &nbsp;Update
       </button>
       </td>
           

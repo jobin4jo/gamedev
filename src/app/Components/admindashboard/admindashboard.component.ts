@@ -15,7 +15,7 @@ export class AdmindashboardComponent {
  selectedTab: string = 'managers';
 
   newManager = { username: '', password: '', game: '' };
-  games = ['Game 1', 'Game 2', 'Game 3'];
+  games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
 
   managers = [
     { username: 'manager1', game: 'Game 1' },

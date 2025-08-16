@@ -120,3 +120,19 @@
     width: 100%;
   }
 }
+
+/* styles.css */
+.festival-label {
+  font-weight: 600;                 /* Bold */
+  font-family: "Comic Sans MS", cursive, sans-serif; /* Playful look */
+  color: #d63384;                   /* Festive pink/purple */
+  text-shadow: 1px 1px 2px #ffd700; /* Golden glow */
+  letter-spacing: 0.5px;            /* Slight spacing */
+}
+
+.festival-option {
+  background: #fff7e6;   /* light festive background */
+  color: #d63384;        /* pinkish text */
+  font-weight: 600;
+  padding: 6px;
+}
