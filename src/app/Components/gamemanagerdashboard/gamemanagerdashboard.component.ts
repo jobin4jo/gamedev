@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { Modal } from 'bootstrap';
+import { LoadingService } from 'src/app/services/loading.service';
 @Component({
   selector: 'app-gamemanagerdashboard',
   templateUrl: './gamemanagerdashboard.component.html',
@@ -8,67 +9,83 @@ import { Modal } from 'bootstrap';
 })
 export class GamemanagerdashboardComponent implements OnInit {
 
-   managerName = 'Manager1';
+  managerName = 'Manager1';
   managedGame = 'Game1';
 
   searchTerm = '';
   searchResults: any = [];
   searchClicked = false;
-  IsSearch:boolean=false;
-  IsViewTable:boolean=false;
-  populatedData:any;
+  IsSearch: boolean = false;
+  IsViewTable: boolean = false;
+  populatedData: any;
   scoreInput: number | null = null;
-currentGameScore: number | null = null;
+  currentGameScore: number | null = null;
+
+  constructor(private user: GameService, private loadingService: LoadingService) { }
+
+  ngOnInit(): void {
+
+  }
 
   onSearch() {
 
     this.searchClicked = true;
+    this.loadingService.show();
     this.user.searchUser(this.searchTerm).subscribe(
       (results: any) => {
+
         this.searchResults = results;
         this.IsSearch = true;
-    
+        this.loadingService.hide()
+
         console.log(this.searchResults);
       },
       (error) => {
+        this.loadingService.hide()
         this.searchResults = [];
-       
+
       }
     );
   }
 
-  constructor(private user:GameService) { }
 
-  ngOnInit(): void {
-          
+  onView(data: any) {
+    this.loadingService.show();
+    this.IsViewTable = true;
+    this.populatedData = data;
+    const gameObj = data.games.find((g: any) => g.gameName === this.managedGame);
+    this.currentGameScore = gameObj ? gameObj.points : null;
+    console.log('Current Game Score:', this.currentGameScore);
+    this.scoreInput = (this.currentGameScore === null) ? null : this.currentGameScore;
+    this.loadingService.hide();
   }
-onView(data:any){
-this.IsViewTable=true;
-this.populatedData=data;
- const gameObj = data.games.find((g: any) => g.gameName === this.managedGame);
-  this.currentGameScore = gameObj ? gameObj.points : null;
-  console.log('Current Game Score:', this.currentGameScore);
-  this.scoreInput = (this.currentGameScore === null) ? null : this.currentGameScore;
-}
-onInputChange() {
-  if (!this.searchTerm || this.searchTerm.trim() === '') {
-    this.IsViewTable = false;
-    this.IsSearch=false;
-     this.searchResults = [];
-  }
-}
-updateScore(){
-  const score = this.scoreInput !== null ? this.scoreInput :null;
-this.user.UpdateScore(this.populatedData.userNumber, this.managedGame, score).subscribe((res:any)=>{
-  console.log('Score updated successfully:', res);
-    const modalElement = document.getElementById('regModal');
-      if (modalElement) {
-        const modalInstance = new Modal(modalElement);
-        modalInstance.show();
-      }
+  onInputChange() {
+    if (!this.searchTerm || this.searchTerm.trim() === '') {
       this.IsViewTable = false;
-      this.onSearch();
-});
-}
+      this.IsSearch = false;
+      this.searchResults = [];
+    }
+  }
+  updateScore() {
+    this.loadingService.show();
+    const score = this.scoreInput !== null ? this.scoreInput : null;
+    this.user.UpdateScore(this.populatedData.userNumber, this.managedGame, score)
+      .subscribe({
+        next: (res: any) => {
+          const modalElement = document.getElementById('regModal');
+          if (modalElement) {
+            const modalInstance = new Modal(modalElement);
+            modalInstance.show();
+          }
+          this.IsViewTable = false;
+          this.loadingService.hide();
+        },
+        error: (err: any) => {
+          console.error('Error updating score:', err);
+          this.loadingService.hide();
+        }
+      });
+
+  }
 
 }
