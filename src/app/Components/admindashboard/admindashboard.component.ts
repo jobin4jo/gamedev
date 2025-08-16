@@ -13,9 +13,11 @@ export class AdmindashboardComponent implements OnInit {
 
   }
    pieChartStyle: string = '';
+   userName: any;
   ngOnInit(): void {
     this.leaderBoard();
     this.calculateGameStatus();
+      this.userName = localStorage.getItem('userName');
   }
 
   selectedTab: string = 'managers';
