@@ -136,3 +136,43 @@
   font-weight: 600;
   padding: 6px;
 }
+
+
+//chart
+.chart-container {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+}
+
+.chart-title {
+  color: #d35400;
+  margin-bottom: 10px;
+}
+
+.pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.completed { background-color: #27ae60; }
+.inprogress { background-color: #f1c40f; }
+.played { background-color: #e67e22; }
+.notplayed { background-color: #e74c3c; }
