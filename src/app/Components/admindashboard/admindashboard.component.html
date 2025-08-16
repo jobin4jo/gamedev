@@ -13,7 +13,11 @@
                         class="bi bi-person-lines-fill"></i> Managers
                     Management</a>
             </li>
-            <li class="nav-item" style="cursor: pointer;" >
+            <li class="nav-item" style="cursor: pointer;" *ngIf="isOnlyEnableAdmin()">
+                <a class="nav-link" [class.active]="selectedTab === 'users'" (click)="selectTab('users')"><i class="bi bi-person-fill-up"></i> User
+                    Management</a>
+            </li>
+            <li class="nav-item" style="cursor: pointer;">
                 <a class="nav-link" [class.active]="selectedTab === 'leaderboard'" (click)="selectTab('leaderboard')">
                     <i class="bi bi-people-fill"></i> Leaderboard</a>
             </li>
@@ -36,66 +40,109 @@
         <div *ngIf="selectedTab === 'managers' && isOnlyEnableAdmin()">
             <h5 class="festival-heading">Managers Management</h5>
 
-            <form class="row g-3 mb-3">
+            <form [formGroup]="managerForm" class="row g-3 mb-3">
                 <!-- Username -->
                 <div class="col-12 col-md-4">
                     <label for="username" class="form-label festival-label">Username</label>
                     <input type="text" id="username" class="form-control" placeholder="Enter username"
-                        [(ngModel)]="newManager.username" name="username">
+                        formControlName="username">
                 </div>
 
                 <!-- Password -->
                 <div class="col-12 col-md-4">
                     <label for="password" class="form-label festival-label">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Enter password"
-                        [(ngModel)]="newManager.password" name="password">
+                        formControlName="password">
                 </div>
 
                 <!-- Game -->
                 <div class="col-12 col-md-4">
                     <label for="game" class="form-label festival-label">Select Game</label>
-                    <select id="game" class="form-select" [(ngModel)]="newManager.game" name="game">
-                        <option *ngFor="let game of games" class="festival-option" [value]="game">{{ game }}</option>
+                    <select id="game" class="form-select" formControlName="game">
+                        <option *ngFor="let game of games" [value]="game">{{ game }}</option>
                     </select>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="col-12">
-                    <button type="button" class=" btn onam-btn  w-100" (click)="addManager()">
+                    <button type="button" class="btn onam-btn w-100" (click)="addManager()">
                         <i class="bi bi-person-add"></i> Add Manager
                     </button>
                 </div>
             </form>
+
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-light">
                     <tr>
                         <th scope="col">S.No</th>
                         <th scope="col">Username</th>
                         <th scope="col">Game</th>
-                        <th scope="col" class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let m of managers; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ m.username }}</td>
-                        <td>{{ m.game }}</td>
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <button class="btn btn-sm btn-warning">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </button> &nbsp;&nbsp;
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
-                            </div>
-                        </td>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.gameType }}</td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
 
+        <!-- usermangement -->
+
+        <div *ngIf="selectedTab === 'users' && isOnlyEnableAdmin()">
+            <h5 class="festival-heading"> User Management</h5>
+
+            <form [formGroup]="managerForm" class="row g-3 mb-3">
+                <!-- Username -->
+                <div class="col-12 col-md-4">
+                    <label for="username" class="form-label festival-label">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter username"
+                        formControlName="username">
+                </div>
+
+                <!-- Password -->
+                <div class="col-12 col-md-4">
+                    <label for="password" class="form-label festival-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password"
+                        formControlName="password">
+                </div>
+
+                <!-- role -->
+                <div class="col-12 col-md-4">
+                    <label for="role" class="form-label festival-label">Select Role</label>
+                    <select id="role" class="form-select" formControlName="role">
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-12">
+                    <button type="button" class="btn onam-btn w-100" (click)="addUser()">
+                        <i class="bi bi-person-add"></i> AddUser
+                    </button>
+                </div>
+            </form>
+
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Username</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let m of Users; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ m.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
 
         <!-- Leaderboard -->
         <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">
@@ -161,9 +208,9 @@
                     </button>
                 </div>
 
- 
-                 <div class="pie-chart" [ngStyle]="{'background': pieChartStyle}"></div>
-              
+
+                <div class="pie-chart" [ngStyle]="{'background': pieChartStyle}"></div>
+
 
                 <ul class="legend list-unstyled mb-0">
                     <li><span class="completed"></span> Completed ({{ status.completed }})</li>
