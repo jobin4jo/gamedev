@@ -24,4 +24,10 @@ export class GameService {
   login(credentials: any) {
     return this.http.post(`${environment.PRODUCTION_URL}/users/login`, credentials);
   }
+  getallMangers(){
+    return this.http.get(`${environment.PRODUCTION_URL}/users/organizers`);
+  }
+  getAllUser(){
+    return this.http.get(`${environment.PRODUCTION_URL}/users`);
+  }
 }

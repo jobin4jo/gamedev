@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-admindashboard',
@@ -9,32 +11,32 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class AdmindashboardComponent implements OnInit {
   leaderboard: any = [];
-  constructor(private route: Router, private service: GameService) {
+  isError: boolean = false;
+  errorMessage: string = '';
+  constructor(private route: Router, private service: GameService, private fb: FormBuilder, private loader: LoadingService) {
 
   }
-   pieChartStyle: string = '';
-   userName: any;
+  pieChartStyle: string = '';
+  userName: any;
+  managerForm!: FormGroup;
   ngOnInit(): void {
+    this.mangerForm();
     this.leaderBoard();
     this.calculateGameStatus();
-      this.userName = localStorage.getItem('userName');
+    this.userName = localStorage.getItem('userName');
+    this.fetchMangerList();
+    this.fetchAllusers();
   }
 
   selectedTab: string = 'managers';
 
-  newManager = { username: '', password: '', game: '' };
   games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
+  // roles = ['admin', 'manager'];
 
-  managers = [
-    { username: 'manager1', game: 'Game 1' },
-    { username: 'manager2', game: 'Game 2' }
-  ];
+  managers: any = [];
 
-  users = [
-    { name: 'John Doe', phone: '1234567890', scores: [8, 10, 7, 9, 6], total: 40 },
-    { name: 'Alice Smith', phone: '0987654321', scores: [9, 9, 8, 8, 10], total: 44 }
-  ];
-  status = { totalPlayed: 0, inProgress: 0, completed: 0 ,notPlayed: 0};
+  Users: any = [];
+  status = { totalPlayed: 0, inProgress: 0, completed: 0, notPlayed: 0 };
 
 
   selectTab(tab: string) {
@@ -45,16 +47,81 @@ export class AdmindashboardComponent implements OnInit {
     const userName = localStorage.getItem('userName');
     return userName === 'admin';
   }
-
-
-
-  addManager() {
-    if (this.newManager.username && this.newManager.password && this.newManager.game) {
-      this.managers.push({ username: this.newManager.username, game: this.newManager.game });
-      this.newManager = { username: '', password: '', game: '' };
-    }
+  mangerForm() {
+    this.managerForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      game: ['', Validators.required]
+    });
   }
 
+  addManager() {
+    if (this.managerForm.valid) {
+      this.loader.show();
+      const managerData = {
+        name: this.managerForm.value.username,
+        password: this.managerForm.value.password,
+        role: this.managerForm.value.role
+      };
+      this.service.createPlayer(managerData).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          // this.fetchMangerList();
+          this.managerForm.reset();
+
+          this.loader.hide();
+        },
+        error: (err) => {
+          if (err) {
+            this.loader.hide();
+            this.isError = true;
+            this.errorMessage = err.error.error;
+            this.managerForm.reset();
+            setTimeout(() => {
+              this.isError = false;
+            }, 3000);
+          }
+        }
+      });
+    } else {
+
+      this.managerForm.markAllAsTouched();
+    }
+  }
+  addUser() {
+    if (this.managerForm.valid) {
+      this.loader.show();
+      const managerData = {
+        name: this.managerForm.value.username,
+        password: this.managerForm.value.password,
+        gameType: this.managerForm.value.game,
+        role: "organizer",
+      };
+      this.service.createPlayer(managerData).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.fetchMangerList();
+          this.managerForm.reset();
+          this.fetchAllusers();
+          this.loader.hide();
+        },
+        error: (err) => {
+          if (err) {
+            this.loader.hide();
+            this.isError = true;
+            this.errorMessage = err.error.error;
+            this.managerForm.reset();
+            setTimeout(() => {
+              this.isError = false;
+            }, 3000);
+          }
+        }
+      });
+    } else {
+
+      this.managerForm.markAllAsTouched();
+    }
+  }
   logout() {
     this.route.navigate(['']);
   }
@@ -83,55 +150,70 @@ export class AdmindashboardComponent implements OnInit {
   }
 
 
-calculateGameStatus() {
-  this.service.getScoreBoard().subscribe((players: any) => {
-    let totalPlayed = 0;
-    let inProgress = 0;
-    let completed = 0;
-    let notPlayed = 0;
+  calculateGameStatus() {
+    this.service.getScoreBoard().subscribe((players: any) => {
+      let totalPlayed = 0;
+      let inProgress = 0;
+      let completed = 0;
+      let notPlayed = 0;
 
-    players.forEach((player: { games: any; }) => {
-      const games = player.games;
+      players.forEach((player: { games: any; }) => {
+        const games = player.games;
 
-      const allNull = games.every((g: any) => g.points === null);                 // not played
-      const allCompleted = games.every((g: any) => g.points != null); // completed
-      const anyPlayed = games.some((g: any) => g.points !== null || g.points === 0); // in progress
+        const allNull = games.every((g: any) => g.points === null);                 // not played
+        const allCompleted = games.every((g: any) => g.points != null); // completed
+        const anyPlayed = games.some((g: any) => g.points !== null || g.points === 0); // in progress
 
-      if (allNull) {
-        notPlayed++;
-      } else {
-        totalPlayed++;  // user played at least one game
+        if (allNull) {
+          notPlayed++;
+        } else {
+          totalPlayed++;  // user played at least one game
 
-        if (allCompleted) completed++;
-        else if (anyPlayed) inProgress++;
-      }
+          if (allCompleted) completed++;
+          else if (anyPlayed) inProgress++;
+        }
+      });
+
+      // Bind result to component variable for UI
+      this.status = { totalPlayed, inProgress, completed, notPlayed };
+      this.updatePieChart();
+      console.log(this.status);
     });
-
-    // Bind result to component variable for UI
-    this.status = { totalPlayed, inProgress, completed, notPlayed };
-     this.updatePieChart();
-    console.log(this.status);
-  });
-}
+  }
 
 
-updatePieChart() {
-  const { completed, inProgress, totalPlayed, notPlayed } = this.status;
-  const total = completed + inProgress + totalPlayed + notPlayed;
-  if (total === 0) return;
+  updatePieChart() {
+    const { completed, inProgress, totalPlayed, notPlayed } = this.status;
+    const total = completed + inProgress + totalPlayed + notPlayed;
+    if (total === 0) return;
 
-  const completedPercent = (completed / total) * 100;
-  const inProgressPercent = (inProgress / total) * 100;
-  const playedPercent = (totalPlayed / total) * 100;
-  const notPlayedPercent = (notPlayed / total) * 100;
+    const completedPercent = (completed / total) * 100;
+    const inProgressPercent = (inProgress / total) * 100;
+    const playedPercent = (totalPlayed / total) * 100;
+    const notPlayedPercent = (notPlayed / total) * 100;
 
-  this.pieChartStyle = `conic-gradient(
+    this.pieChartStyle = `conic-gradient(
     #27ae60 0% ${completedPercent}%,
     #f1c40f ${completedPercent}% ${completedPercent + inProgressPercent}%,
     #e67e22 ${completedPercent + inProgressPercent}% ${completedPercent + inProgressPercent + playedPercent}%,
     #e74c3c ${completedPercent + inProgressPercent + playedPercent}% 100%
   )`;
-}
-
-
+  }
+  fetchMangerList() {
+    this.loader.show();
+    this.service.getallMangers().subscribe((data: any) => {
+      this.managers = data;
+      this.loader.hide();
+      console.log(data);
+    })
+  }
+  fetchAllusers() {
+   
+    this.service.getAllUser().subscribe((data: any) => {
+      console.log(data);
+      const adminUsers = data.filter((user: any) => user?.role && user.role.toLowerCase() === 'admin');
+      this.Users = adminUsers;
+      console.log(this.Users);
+    });
+  }
 }

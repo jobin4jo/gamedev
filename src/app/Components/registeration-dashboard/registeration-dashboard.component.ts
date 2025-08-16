@@ -28,8 +28,8 @@ export class RegisterationDashboardComponent {
       this.loadingService.show();
       let player = {
         name: this.playerForm.value.playerName,
-        role: "player"
-        // place:this.playerForm.value.place
+        role: "player",
+        place:this.playerForm.value.place
       };
       this.player.createPlayer(player).subscribe({
         next: (response: any) => {
