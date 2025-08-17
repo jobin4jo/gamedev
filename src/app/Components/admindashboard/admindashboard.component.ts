@@ -70,7 +70,9 @@ export class AdmindashboardComponent implements OnInit {
       const managerData = {
         name: this.managerForm.value.username,
         password: this.managerForm.value.password,
-        role: this.managerForm.value.role
+        role:'organizer',
+        gameType: this.managerForm.value.game
+        
       };
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
