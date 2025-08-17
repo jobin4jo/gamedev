@@ -19,8 +19,10 @@ export class AdmindashboardComponent implements OnInit {
   pieChartStyle: string = '';
   userName: any;
   managerForm!: FormGroup;
+  userForm!: FormGroup;
   ngOnInit(): void {
     this.mangerForm();
+    this.loadUserForm();
     this.leaderBoard();
     this.calculateGameStatus();
     this.userName = localStorage.getItem('userName');
@@ -31,7 +33,7 @@ export class AdmindashboardComponent implements OnInit {
   selectedTab: string = 'managers';
 
   games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
-  // roles = ['admin', 'manager'];
+   roles = ['admin', 'reception'];
 
   managers: any = [];
 
@@ -54,6 +56,13 @@ export class AdmindashboardComponent implements OnInit {
       game: ['', Validators.required]
     });
   }
+  loadUserForm() {
+    this.userForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['admin', Validators.required]
+    });
+  }
 
   addManager() {
     if (this.managerForm.valid) {
@@ -66,7 +75,7 @@ export class AdmindashboardComponent implements OnInit {
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
           console.log(response);
-          // this.fetchMangerList();
+           this.fetchMangerList();
           this.managerForm.reset();
 
           this.loader.hide();
@@ -89,19 +98,17 @@ export class AdmindashboardComponent implements OnInit {
     }
   }
   addUser() {
-    if (this.managerForm.valid) {
+    if (this.userForm.valid) {
       this.loader.show();
       const managerData = {
-        name: this.managerForm.value.username,
-        password: this.managerForm.value.password,
-        gameType: this.managerForm.value.game,
-        role: "organizer",
+        name: this.userForm.value.username,
+        password: this.userForm.value.password,
+        role: "admin",
       };
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
           console.log(response);
-          this.fetchMangerList();
-          this.managerForm.reset();
+          this.userForm.reset();
           this.fetchAllusers();
           this.loader.hide();
         },
