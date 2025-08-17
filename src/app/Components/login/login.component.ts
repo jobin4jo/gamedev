@@ -10,6 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private router: Router, private login: GameService, private loading: LoadingService) {
     this.loginForm = this.fb.group({
@@ -51,13 +52,19 @@ export class LoginComponent {
           this.loading.hide();
         },
         error: (error) => {
-          console.log(error);
           this.loading.hide();
+          this.errorMessage = error.error.error
+          this.hideSnackbar();
         }
       });
     } else {
       this.loginForm.markAllAsTouched();
       this.loading.hide();
     }
+  }
+  hideSnackbar() {
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000);
   }
 }

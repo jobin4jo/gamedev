@@ -1,119 +1,93 @@
 <div class="container py-3">
 
-  <!-- Welcome Card -->
-  <!-- <div class="card shadow-sm mb-3">
+
+  <div class="card festival-card shadow-sm mb-3" *ngIf="isOnlyEnableOrganizer()">
     <div class="card-body text-center text-md-start">
-      <h5 class="card-title mb-1">Welcome, {{ managerName }}!</h5>
-      <p class="card-text">You manage: <strong>{{ managedGame }}</strong></p>
-                <button class="btn btn-danger btn-sm" routerLink="/">Logout</button> 
-
+      <h5 class="card-title mb-1">🌼 Welcome, {{ managerName }}! 🌼</h5>
+      <p class="card-text">
+        You manage: <strong>{{ managedGame }}</strong>
+      </p>
+      <button class="btn btn-danger btn-sm" routerLink="/"> <i class="bi bi-box-arrow-left"></i> &nbsp;Logout</button>
     </div>
-    
-  </div> -->
-
-<div class="card festival-card shadow-sm mb-3">
-  <div class="card-body text-center text-md-start">
-    <h5 class="card-title mb-1">🌼 Welcome, {{ managerName }}! 🌼</h5>
-    <p class="card-text">
-      You manage: <strong>{{ managedGame }}</strong>
-    </p>
-    <button class="btn btn-danger btn-sm" routerLink="/"> <i class="bi bi-box-arrow-left"></i> &nbsp;Logout</button>
   </div>
-</div>
 
 
   <!-- Search Card -->
   <div class="card festival-card shadow-sm">
     <div class="card-body">
       <h6 class="card-title mb-3">Search User</h6>
-      
+
       <!-- Input & Button (stack on mobile, inline on larger screens) -->
       <div class="row g-2">
         <div class="col-12 col-md-9">
-          <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Enter Register Number or Name" 
-            [(ngModel)]="searchTerm"
-             (input)="onInputChange()"
-            >
+          <input type="text" class="form-control" placeholder="Enter Register Number or Name" [(ngModel)]="searchTerm"
+            (input)="onInputChange()">
         </div>
-        <div  class="col-12 col-md-3 d-grid">
-          <button [disabled]="searchTerm.length ==0"  class="btn onam-btn" (click)="onSearch()"><i class="bi bi-search"></i> &nbsp; Search</button>
+        <div class="col-12 col-md-3 d-grid">
+          <button [disabled]="searchTerm.length ==0" class="btn onam-btn" (click)="onSearch()"><i
+              class="bi bi-search"></i> &nbsp; Search</button>
         </div>
       </div>
 
       <!-- Search Results -->
       <div *ngIf="searchResults.length > 0" class="mt-3">
         <h6>Search Results:</h6>
-       <div class="table-responsive">
-    <table class="table  table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Name</th>
-          <th>Register Number</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of searchResults">
-          <td>{{ user.name }}</td>
-          <td>{{ user.userNumber }}</td>
-          <td><button class="btn onam-btn" (click)="onView(user)"> <i class="bi bi-book"></i> &nbsp;View</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <hr>
-    <table *ngIf="IsViewTable" class="table table-bordered table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Player Name</th>
-          <th>Reg.No</th>
-          <th>Game</th>
-          <th>Score</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr >
-          <td>{{ populatedData.name }}</td>
-          <td>{{ populatedData.userNumber }}</td>
-          <td >{{managedGame}}</td>
-          <td>
-            <!-- <input
-        type="number"
-        class="form-control"
-        [(ngModel)]="scoreInput"
-        [disabled]="currentGameScore !== null && currentGameScore !== 0"
-        placeholder="Enter score"
-        max="10"
-        style="max-width: 100px;"
-      > -->
-      <select
-  class="form-control"
-  [(ngModel)]="scoreInput"
-  [disabled]="currentGameScore !== null "
-  style="max-width: 100px;"
- 
->
-  <option *ngFor="let n of [0,1,2,3,4,5,6,7,8,9,10]" [value]="n">{{ n }}</option>
-</select>
-    </td>
-      <td>
-        <button
-        class="btn onam-btn btn-sm"
-        (click)="updateScore()"
-        [disabled]="currentGameScore !== null "
-      >
-        <i class="bi bi-pencil-square"></i> &nbsp;Update
-      </button>
-      </td>
-          
-        </tr>
-      </tbody>
+        <div class="table-responsive">
+          <table class="table  table-bordered table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Register Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of searchResults">
+                <td>{{ user.name }}</td>
+                <td>{{ user.userNumber }}</td>
+                <td><button class="btn onam-btn" (click)="onView(user)"> <i class="bi bi-book"></i> &nbsp;View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <table *ngIf="IsViewTable" class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Player Name</th>
+                <th>Reg.No</th>
+                <th>Game</th>
+                <th>Score</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ populatedData.name }}</td>
+                <td>{{ populatedData.userNumber }}</td>
+                <td *ngIf="isOnlyEnableOrganizer()">{{managedGame}}</td>
+                <td *ngIf="!isOnlyEnableOrganizer()">
+                  <select id="game" class="form-select" [(ngModel)]="gameSelection">
+                    <option *ngFor="let game of games" [value]="game">{{ game }}</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control" [(ngModel)]="scoreInput" [disabled]="currentGameScore !== null "
+                    style="max-width: 100px;">
+                    <option *ngFor="let n of [0,1,2,3,4,5,6,7,8,9,10]" [value]="n">{{ n }}</option>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn onam-btn btn-sm" (click)="updateScore()" [disabled]="currentGameScore !== null && isOnlyEnableOrganizer()">
+                    <i class="bi bi-pencil-square"></i> &nbsp;Update
+                  </button>
+                </td>
 
-    </table>
-  </div>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
       </div>
 
       <div *ngIf="searchResults.length === 0 && IsSearch" class="text-muted mt-3">
@@ -132,7 +106,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        Your  Score: <strong>{{ scoreInput }}</strong>
+        Your Score: <strong>{{ scoreInput }}</strong>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>

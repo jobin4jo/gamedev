@@ -1,3 +1,4 @@
+<app-snackbar [errorMessage]="errorMessage" *ngIf="errorMessage"></app-snackbar>
 <div class="container-fluid p-3">
     <div class="card festival-card shadow-sm p-3">
         <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
@@ -14,8 +15,13 @@
                     Management</a>
             </li>
             <li class="nav-item" style="cursor: pointer;" *ngIf="isOnlyEnableAdmin()">
-                <a class="nav-link" [class.active]="selectedTab === 'users'" (click)="selectTab('users')"><i class="bi bi-person-fill-up"></i> User
+                <a class="nav-link" [class.active]="selectedTab === 'users'" (click)="selectTab('users')"><i
+                        class="bi bi-person-fill-up"></i> User
                     Management</a>
+            </li>
+            <li class="nav-item" style="cursor: pointer;" *ngIf="isOnlyEnableAdmin()">
+                <a class="nav-link" [class.active]="selectedTab === 'updatePlayerScore'"
+                    (click)="selectTab('updatePlayerScore')"><i class="bi bi-person-fill-up"></i> updatePlayerScore</a>
             </li>
             <li class="nav-item" style="cursor: pointer;">
                 <a class="nav-link" [class.active]="selectedTab === 'leaderboard'" (click)="selectTab('leaderboard')">
@@ -34,6 +40,9 @@
         <!-- player register -->
         <div *ngIf="selectedTab === 'playerRegister'">
             <app-registeration-dashboard></app-registeration-dashboard>
+        </div>
+        <div *ngIf="selectedTab === 'updatePlayerScore'">
+            <app-gamemanagerdashboard></app-gamemanagerdashboard>
         </div>
 
         <!-- Managers Management -->
@@ -77,6 +86,7 @@
                         <th scope="col">S.No</th>
                         <th scope="col">Username</th>
                         <th scope="col">Game</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,6 +94,10 @@
                         <td>{{ i + 1 }}</td>
                         <td>{{ m.name }}</td>
                         <td>{{ m.gameType }}</td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deleteUser(m._id,'organizer')"><i
+                                    class="bi bi-trash"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -102,25 +116,19 @@
                     <input type="text" id="username" class="form-control" placeholder="Enter username"
                         formControlName="username">
                 </div>
-
                 <!-- Password -->
                 <div class="col-12 col-md-4">
                     <label for="password" class="form-label festival-label">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Enter password"
                         formControlName="password">
                 </div>
-
                 <!-- role -->
                 <div class="col-12 col-md-4">
                     <label for="role" class="form-label festival-label">Select Role</label>
-                    <!-- <select id="role" class="form-select" formControlName="role">
-                        <option value="admin">Admin</option>
-                    </select> -->
-                     <select id="role" class="form-select" formControlName="role">
+                    <select id="role" class="form-select" formControlName="role">
                         <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
                     </select>
                 </div>
-
                 <!-- Submit Button -->
                 <div class="col-12">
                     <button type="button" class="btn onam-btn w-100" (click)="addUser()">
@@ -128,19 +136,22 @@
                     </button>
                 </div>
             </form>
-
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-light">
                     <tr>
                         <th scope="col">S.No</th>
                         <th scope="col">Username</th>
-                      
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let m of Users; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ m.name }}</td>
+                        <td>
+                            <button class="btn btn-danger" (click)="deleteUser(m._id)"><i
+                                    class="bi bi-trash"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -150,22 +161,6 @@
         <!-- Leaderboard -->
         <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">
             <h5 class="festival-heading">Leaderboard</h5>
-            <!-- <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Total Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let l of leaderboard; let i = index">
-                        <td>{{l.rank}}</td>
-                        <td>{{l.name}}</td>
-                        <td>{{l.total}}</td>
-                    </tr>
-                </tbody>
-            </table> -->
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-light">
                     <tr>
@@ -191,18 +186,7 @@
                     </tr>
                 </tbody>
             </table>
-
             <hr>
-            <!-- <div class="chart-container">
-                <h3 class="chart-title">Game Status</h3>
-                <div class="pie-chart"></div>
-                <ul class="legend">
-                    <li><span class="completed"></span> Completed </li>
-                    <li><span class="inprogress"></span> In Progress (5)</li>
-                    <li><span class="played"></span> Played (15)</li>
-                </ul>
-            </div> -->
-
             <div class="chart-container p-3 shadow-sm rounded">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3 class="chart-title m-0">Game Status</h3>
@@ -210,11 +194,7 @@
                         <i class="bi bi-arrow-clockwise"></i> Refresh
                     </button>
                 </div>
-
-
                 <div class="pie-chart" [ngStyle]="{'background': pieChartStyle}"></div>
-
-
                 <ul class="legend list-unstyled mb-0">
                     <li><span class="completed"></span> Completed ({{ status.completed }})</li>
                     <li><span class="inprogress"></span> In Progress ({{ status.inProgress }})</li>
@@ -222,8 +202,6 @@
                     <li><span class="played"></span> Played ({{ status.totalPlayed }})</li>
                 </ul>
             </div>
-
-
         </div>
     </div>
 </div>
