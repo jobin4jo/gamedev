@@ -141,13 +141,15 @@
                     <tr>
                         <th scope="col">S.No</th>
                         <th scope="col">Username</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let m of Users; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ m.name }}</td>
+                        <td>{{ m.name }} </td>
+                        <td>{{ m.role }}</td>
                         <td>
                             <button class="btn btn-danger" (click)="deleteUser(m._id)"><i
                                     class="bi bi-trash"></i></button>

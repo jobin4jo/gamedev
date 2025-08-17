@@ -94,12 +94,13 @@ export class AdmindashboardComponent implements OnInit {
     }
   }
   addUser() {
+    debugger
     if (this.userForm.valid) {
       this.loader.show();
       const managerData = {
         name: this.userForm.value.username,
         password: this.userForm.value.password,
-        role: "admin",
+        role: this.userForm.value.role,
       };
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
@@ -212,9 +213,12 @@ export class AdmindashboardComponent implements OnInit {
     this.service.getAllUser().subscribe({
       next: (data: any) => {
         console.log(data);
+        // admin and receptionist
         const adminUsers = data.filter(
-          (user: any) => user?.role && user.role.toLowerCase() === 'admin'
+          (user: any) => user?.role &&
+            (user.role.toLowerCase() === 'admin' || user.role.toLowerCase() === 'reception')
         );
+
         this.Users = adminUsers;
       },
       error: (err) => {
