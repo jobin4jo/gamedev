@@ -95,7 +95,7 @@
         <div *ngIf="selectedTab === 'users' && isOnlyEnableAdmin()">
             <h5 class="festival-heading"> User Management</h5>
 
-            <form [formGroup]="managerForm" class="row g-3 mb-3">
+            <form [formGroup]="userForm" class="row g-3 mb-3">
                 <!-- Username -->
                 <div class="col-12 col-md-4">
                     <label for="username" class="form-label festival-label">Username</label>
@@ -113,8 +113,11 @@
                 <!-- role -->
                 <div class="col-12 col-md-4">
                     <label for="role" class="form-label festival-label">Select Role</label>
-                    <select id="role" class="form-select" formControlName="role">
+                    <!-- <select id="role" class="form-select" formControlName="role">
                         <option value="admin">Admin</option>
+                    </select> -->
+                     <select id="role" class="form-select" formControlName="role">
+                        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
                     </select>
                 </div>
 
