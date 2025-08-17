@@ -11,8 +11,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class AdmindashboardComponent implements OnInit {
   leaderboard: any = [];
-  isError: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
   constructor(private route: Router, private service: GameService, private fb: FormBuilder, private loader: LoadingService) {
 
   }
@@ -33,7 +32,7 @@ export class AdmindashboardComponent implements OnInit {
   selectedTab: string = 'managers';
 
   games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
-   roles = ['admin', 'reception'];
+  roles = ['admin', 'reception'];
 
   managers: any = [];
 
@@ -46,8 +45,8 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   isOnlyEnableAdmin(): boolean {
-    const userName = localStorage.getItem('userName');
-    return userName === 'admin';
+    const role = localStorage.getItem('role');
+    return role === 'admin';
   }
   mangerForm() {
     this.managerForm = this.fb.group({
@@ -70,27 +69,22 @@ export class AdmindashboardComponent implements OnInit {
       const managerData = {
         name: this.managerForm.value.username,
         password: this.managerForm.value.password,
-        role:'organizer',
+        role: 'organizer',
         gameType: this.managerForm.value.game
-        
+
       };
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
-          console.log(response);
-           this.fetchMangerList();
+          this.fetchMangerList();
           this.managerForm.reset();
-
           this.loader.hide();
         },
         error: (err) => {
           if (err) {
             this.loader.hide();
-            this.isError = true;
             this.errorMessage = err.error.error;
             this.managerForm.reset();
-            setTimeout(() => {
-              this.isError = false;
-            }, 3000);
+            this.hideSnackbar();
           }
         }
       });
@@ -109,7 +103,6 @@ export class AdmindashboardComponent implements OnInit {
       };
       this.service.createPlayer(managerData).subscribe({
         next: (response: any) => {
-          console.log(response);
           this.userForm.reset();
           this.fetchAllusers();
           this.loader.hide();
@@ -117,12 +110,9 @@ export class AdmindashboardComponent implements OnInit {
         error: (err) => {
           if (err) {
             this.loader.hide();
-            this.isError = true;
             this.errorMessage = err.error.error;
             this.managerForm.reset();
-            setTimeout(() => {
-              this.isError = false;
-            }, 3000);
+            this.hideSnackbar();
           }
         }
       });
@@ -139,9 +129,6 @@ export class AdmindashboardComponent implements OnInit {
     this.service.getScoreBoard().subscribe((data: any) => {
       let rank = 1;
       let prevTotal: number | null = null;
-      console.log(data);
-      //  console.log(this.calculateGameStatus(data));
-
       this.leaderboard = data
         .map((player: any) => ({ name: player.name, total: player.totalPoints ?? 0 }))
         .sort((a: any, b: any) => b.total - a.total)
@@ -153,11 +140,14 @@ export class AdmindashboardComponent implements OnInit {
           return { ...player, rank };
         })
         .filter((player: { rank: number; }) => player.rank <= 3); // top 3 ranks only
-      console.log(this.leaderboard);
     });
-    console.log(this.leaderboard);
   }
 
+  hideSnackbar() {
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000);
+  }
 
   calculateGameStatus() {
     this.service.getScoreBoard().subscribe((players: any) => {
@@ -182,11 +172,9 @@ export class AdmindashboardComponent implements OnInit {
           else if (anyPlayed) inProgress++;
         }
       });
-
       // Bind result to component variable for UI
       this.status = { totalPlayed, inProgress, completed, notPlayed };
       this.updatePieChart();
-      console.log(this.status);
     });
   }
 
@@ -210,19 +198,44 @@ export class AdmindashboardComponent implements OnInit {
   }
   fetchMangerList() {
     this.loader.show();
-    this.service.getallMangers().subscribe((data: any) => {
-      this.managers = data;
-      this.loader.hide();
-      console.log(data);
-    })
+    this.service.getallMangers().subscribe({
+      next: (data: any) => {
+        this.managers = data;
+        this.loader.hide();
+      },
+      error: (err) => {
+        this.loader.hide();
+      }
+    });
   }
   fetchAllusers() {
-   
-    this.service.getAllUser().subscribe((data: any) => {
-      console.log(data);
-      const adminUsers = data.filter((user: any) => user?.role && user.role.toLowerCase() === 'admin');
-      this.Users = adminUsers;
-      console.log(this.Users);
+    this.service.getAllUser().subscribe({
+      next: (data: any) => {
+        console.log(data);
+        const adminUsers = data.filter(
+          (user: any) => user?.role && user.role.toLowerCase() === 'admin'
+        );
+        this.Users = adminUsers;
+      },
+      error: (err) => {
+      }
+    });
+  }
+  deleteUser(userId: string, userType?: string) {
+    this.loader.show();
+    this.service.deleteUser(userId).subscribe({
+      next: (response: any) => {
+        this.loader.hide();
+        if (userType === 'organizer') {
+          this.fetchMangerList();
+        } else {
+          this.fetchAllusers();
+        }
+
+      },
+      error: (err) => {
+        this.loader.hide();
+      }
     });
   }
 }

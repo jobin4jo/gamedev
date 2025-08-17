@@ -18,8 +18,9 @@ export class GamemanagerdashboardComponent implements OnInit {
   IsViewTable: boolean = false;
   populatedData: any;
   scoreInput: number | null = null;
+  gameSelection: string | null = null;
   currentGameScore: number | null = null;
-
+  games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5'];
   constructor(private user: GameService, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
@@ -69,6 +70,10 @@ export class GamemanagerdashboardComponent implements OnInit {
   updateScore() {
     this.loadingService.show();
     const score = this.scoreInput !== null ? this.scoreInput : null;
+    let role = localStorage.getItem('role');
+    if (role === 'admin') {
+      this.managedGame = this.gameSelection;
+    }
     this.user.UpdateScore(this.populatedData.userNumber, this.managedGame, score)
       .subscribe({
         next: (res: any) => {
@@ -89,4 +94,8 @@ export class GamemanagerdashboardComponent implements OnInit {
 
   }
 
+  isOnlyEnableOrganizer(): boolean {
+    const role = localStorage.getItem('role');
+    return role === 'organizer';
+  }
 }

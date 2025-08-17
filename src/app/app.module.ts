@@ -10,6 +10,7 @@ import { GamemanagerdashboardComponent } from './Components/gamemanagerdashboard
 import { RegisterationDashboardComponent } from './Components/registeration-dashboard/registeration-dashboard.component';
 import { ScoreboardComponent } from './Components/scoreboard/scoreboard.component';
 import { HttpClientModule } from  '@angular/common/http';
+import { SnackbarComponent } from './utility/snackbar/snackbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { HttpClientModule } from  '@angular/common/http';
     GamemanagerdashboardComponent,
     RegisterationDashboardComponent,
     ScoreboardComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
