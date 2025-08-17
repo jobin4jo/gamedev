@@ -16,6 +16,7 @@
             <table class="table table-bordered table-striped">
                 <thead class="table-primary  sticky-header">
                     <tr>
+                        <th>Sl.No</th>
                         <th>Rank</th>
                         <th>Name</th>
                         <th>Place</th>
@@ -26,7 +27,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let player of players"  [ngClass]="player.rankClass">
+                    <tr *ngFor="let player of players  let i = index"  [ngClass]="player.rankClass">
+                        <td>{{i + 1}}</td>
                         <td>{{player.rank}}</td>
                         <td>{{player.name}}</td>
                         <td>{{player.place}}</td>
