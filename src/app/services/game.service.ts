@@ -30,4 +30,7 @@ export class GameService {
   getAllUser(){
     return this.http.get(`${environment.PRODUCTION_URL}/users`);
   }
+  deleteUser(userId: string) {
+    return this.http.delete(`${environment.PRODUCTION_URL}/users/${userId}`);
+  }
 }
