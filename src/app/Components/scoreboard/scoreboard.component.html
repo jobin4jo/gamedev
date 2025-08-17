@@ -4,8 +4,10 @@
             <h4 class="loading-bar1">Happy Onam! May your life bloom with joy and prosperity</h4>
             <div class="loading-bar">Welcome to all, Good luck for your games </div>
 
-            <button class="btn btn-danger btn-sm" (click)="onGetUpdate()"> <i class="bi bi-arrow-clockwise"></i>&nbsp;Refresh</button>
-            <button class="btn btn-success btn-sm" routerLink="/admin"> <i class="bi bi-box-arrow-left"></i> &nbsp;Back</button>
+            <button class="btn btn-danger btn-sm" (click)="onGetUpdate()"> <i
+                    class="bi bi-arrow-clockwise"></i>&nbsp;Refresh</button>
+            <button class="btn btn-success btn-sm" routerLink="/admin"> <i class="bi bi-box-arrow-left"></i>
+                &nbsp;Back</button>
 
         </div>
 
@@ -27,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let player of players  let i = index"  [ngClass]="player.rankClass">
+                    <tr *ngFor="let player of players  let i = index" [ngClass]="player.rankClass">
                         <td>{{i + 1}}</td>
                         <td>{{player.rank}}</td>
                         <td>{{player.name}}</td>
@@ -63,3 +65,9 @@
         </div> -->
     </div>
 </div>
+
+
+<!-- Right-to-left (classic ticker) -->
+<marquee direction="left" behavior="scroll" scrollamount="6" scrolldelay="50">
+    <h4> ✨ “Onam greetings! This application is lovingly built by Jo4Tech team</h4>
+</marquee>
