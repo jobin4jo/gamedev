@@ -1,0 +1,58 @@
+<div class="container-fluid festival-bg min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100">
+
+        <!-- Title -->
+        <div class="col-12 text-center mb-4">
+            <h1 class="festival-title">🎉 Onam Games Score Check 🎉</h1>
+            <p class="festival-sub">Enter your user number and see your score below</p>
+        </div>
+
+        <!-- Card Section -->
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card festival-card w-100 mx-3 p-4">
+
+                <!-- Input -->
+                <label for="userNumber" style="font-weight: bold;" class="form-label">User Number</label>
+                <div class="input-group mb-4">
+                    <input type="number" id="userNumber" [(ngModel)]="userNumber" class="form-control "
+                        placeholder="Please Enter your Number" (input)="onInputChange()"/>
+                    <button class="btn check-btn" [disabled]="!userNumber" (click)="checkScore()">Check</button>
+                </div>
+
+                <!-- Result -->
+                <div class="result text-center" *ngIf="userData">
+                    <h2>✨ {{userData.name}}✨</h2>
+                    <p class="score">Your Score: <span>{{ totalScore }}</span> 🎊</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let g of userData.games">
+                                    <td>{{ g.gameName }}</td>
+                                    <td>{{ g.points }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+                <div class="developed-by text-center mt-2">
+                    <small>Developed by <strong>Jo4Tech Solutions</strong></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add inside body -->
+<div class="petal">🌸</div>
+<div class="petal">🌼</div>
+<div class="petal">🌺</div>
+<div class="petal">💮</div>
+<div class="petal">🌻</div>

@@ -11,6 +11,7 @@ import { RegisterationDashboardComponent } from './Components/registeration-dash
 import { ScoreboardComponent } from './Components/scoreboard/scoreboard.component';
 import { HttpClientModule } from  '@angular/common/http';
 import { SnackbarComponent } from './utility/snackbar/snackbar.component';
+import { ScoreCheckComponent } from './Components/score-check/score-check.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { SnackbarComponent } from './utility/snackbar/snackbar.component';
     RegisterationDashboardComponent,
     ScoreboardComponent,
     SnackbarComponent,
+    ScoreCheckComponent,
   ],
   imports: [
     BrowserModule,
