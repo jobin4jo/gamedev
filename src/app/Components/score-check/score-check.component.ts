@@ -17,6 +17,7 @@ export class ScoreCheckComponent {
   checkScore() {
     if (!this.userNumber) return;
     this.loader.show();
+    this.totalScore = 0;
     this.service.searchUser(this.userNumber).subscribe((res: any) => {
       this.userData = res[0];
       if (this.userData?.games) {
@@ -38,10 +39,10 @@ export class ScoreCheckComponent {
     );
   }
   onInputChange() {
-     if (!this.userNumber || this.userNumber.trim() === '') {
-     this.userData = null;
-    this.totalScore = 0;
+    if (!this.userNumber || this.userNumber.trim() === '') {
+      this.userData = null;
+      this.totalScore = 0;
     }
-    
+
   }
 }
