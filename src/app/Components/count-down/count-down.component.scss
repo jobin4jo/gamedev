@@ -6,17 +6,17 @@ $text: #4A2E11;     // dark brownish for contrast
 $muted: #7A4E2A;
 
 .countdown-card {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 22px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, $bg-start 0%, $bg-end 100%);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.10);
-  font-family: 'Poppins', 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color: $text;
+  width: 100vw;          /* full viewport width */
+  height: 100vh;         /* full viewport height */
+  margin: 0;             /* remove auto margin */
+  border-radius: 0;      /* no rounded corners for fullscreen */
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  justify-content: center; /* vertical center */
+  align-items: center;     /* horizontal center */
+  padding: 24px;
+  background: linear-gradient(180deg, #FFF3DE 0%, #FFD082 100%);
+  box-shadow: none;      /* remove shadow for full cover */
 }
 
 .header {
@@ -147,4 +147,21 @@ $muted: #7A4E2A;
   }
   .header h1 { font-size: 20px; }
   .countdown .time-col .time { font-size: 20px; min-width: 50px; }
+}
+.fullscreen-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('/assets/onam-bg.jpg') no-repeat center center / cover;
+}
+
+.countdown-card {
+  max-width: 720px;
+  width: 90%;       /* responsive for mobile */
+  padding: 22px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #FFF3DE 0%, #FFD082 100%);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.10);
 }
