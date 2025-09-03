@@ -165,3 +165,20 @@ $muted: #7A4E2A;
   background: linear-gradient(180deg, #FFF3DE 0%, #FFD082 100%);
   box-shadow: 0 8px 30px rgba(0,0,0,0.10);
 }
+
+.launch-btn {
+  background: linear-gradient(90deg, #ff9800, #f44336);
+  border: none;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+}
