@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
@@ -17,6 +18,7 @@ targetDate = new Date('2025-09-05T14:00:00');
 
   isLive = false;
   private sub?: Subscription;
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.update(); // initial update
@@ -52,5 +54,8 @@ targetDate = new Date('2025-09-05T14:00:00');
 
   private pad(n: number) {
     return n < 10 ? `0${n}` : `${n}`;
+  }
+   launchApp() {
+    this.router.navigate(['/score-check']); // Change route as needed
   }
 }

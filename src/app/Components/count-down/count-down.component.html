@@ -1,55 +1,58 @@
 <div class="fullscreen-wrapper">
-        <div class="countdown-card" role="region" aria-live="polite" aria-label="Application launch countdown">
-            <div class="header">
-                <div class="pookalam" aria-hidden="true">🌼</div>
-                <h1>ONAM GAMES MANAGEMENT</h1>
-                <h2 class="sub">Digital way to manage scores & events</h2>
-            </div>
-
-            <div class="body">
-                <div class="app-row">
-                    <div class="app-name">ONAMFEST APP</div>
-                    <div class="badge" *ngIf="!isLive">Starts: 05-09-2025</div>
-                    <div class="badge live" *ngIf="isLive">Now Live!</div>
-                </div>
-
-                <div class="countdown" *ngIf="!isLive; else liveTemplate">
-                    <div class="time-col">
-                        <div class="time">{{ days }}</div>
-                        <div class="label">Days</div>
-                    </div>
-                    <div class="time-col">
-                        <div class="time">{{ hours }}</div>
-                        <div class="label">Hours</div>
-                    </div>
-                    <div class="time-col">
-                        <div class="time">{{ minutes }}</div>
-                        <div class="label">Minutes</div>
-                    </div>
-                    <div class="time-col">
-                        <div class="time">{{ seconds }}</div>
-                        <div class="label">Seconds</div>
-                    </div>
-                </div>
-
-                <ng-template #liveTemplate>
-                    <div class="live-now">
-                        <div class="live-dot" aria-hidden="true"></div>
-                        <div class="live-text">Now Live — Pushpagiri • 05-09-2025</div>
-                    </div>
-                </ng-template>
-
-                <ul class="features">
-                    <li>📱 QR Score Check</li>
-                    <li>📊 Digital Score Manage</li>
-                    <li>⚡ Simple & Fast</li>
-                </ul>
-            </div>
-
-            <div class="footer">
-                <div class="developed">Developed by JO4Tech Team</div>
-                <div class="happy">HAPPY ONAM</div>
-            </div>
+    <div class="countdown-card" role="region" aria-live="polite" aria-label="Application launch countdown">
+        <div class="header">
+            <div class="pookalam" aria-hidden="true">🌼</div>
+            <h1>ONAM GAMES MANAGEMENT</h1>
+            <h2 class="sub">Digital way to manage scores & events</h2>
         </div>
- 
+
+        <div class="body">
+            <div class="app-row">
+                <div class="app-name">ONAMFEST APP</div>
+                <div class="badge" *ngIf="!isLive">Starts: 05-09-2025</div>
+                <div class="badge live" *ngIf="isLive">Now Live!</div>
+            </div>
+
+            <div class="countdown" *ngIf="!isLive; else liveTemplate">
+                <div class="time-col">
+                    <div class="time">{{ days }}</div>
+                    <div class="label">Days</div>
+                </div>
+                <div class="time-col">
+                    <div class="time">{{ hours }}</div>
+                    <div class="label">Hours</div>
+                </div>
+                <div class="time-col">
+                    <div class="time">{{ minutes }}</div>
+                    <div class="label">Minutes</div>
+                </div>
+                <div class="time-col">
+                    <div class="time">{{ seconds }}</div>
+                    <div class="label">Seconds</div>
+                </div>
+            </div>
+            <div *ngIf="isLive" class="launch-wrapper">
+                <button class="launch-btn" (click)="launchApp()">🚀 Launch App</button>
+            </div>
+
+            <ng-template #liveTemplate>
+                <div class="live-now">
+                    <div class="live-dot" aria-hidden="true"></div>
+                    <div class="live-text">Now Live — Pushpagiri • 05-09-2025</div>
+                </div>
+            </ng-template>
+
+            <ul class="features">
+                <li>📱 QR Score Check</li>
+                <li>📊 Digital Score Manage</li>
+                <li>⚡ Simple & Fast</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <div class="developed">Developed by JO4Tech Team</div>
+            <div class="happy">HAPPY ONAM</div>
+        </div>
+    </div>
+
 </div>
