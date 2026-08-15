@@ -1,0 +1,561 @@
+/* ============================================
+   🌞 SELF-REGISTRATION — DAYLIGHT THEME
+   ============================================ */
+
+.self-reg-wrapper {
+  min-height: 100vh;
+  background-color: #F8F6F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Baloo 2', 'Inter', system-ui, sans-serif;
+}
+
+/* ── Ambient Orbs ── */
+.ambient-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+
+  &.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.25), transparent 70%);
+    top: -10%;
+    right: -10%;
+  }
+
+  &.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(202, 138, 4, 0.2), transparent 70%);
+    bottom: -10%;
+    left: -10%;
+  }
+}
+
+/* ── Main Card ── */
+.self-reg-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.07);
+  padding: 30px 24px;
+  overflow: hidden;
+}
+
+/* ── Header Brand ── */
+.card-header-brand {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+  .emblem-box {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFF7ED, #FFEDD5);
+    border: 2px solid rgba(234, 88, 12, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15);
+
+    .emblem-emoji {
+      font-size: 26px;
+    }
+  }
+
+  .brand-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.85rem;
+    margin: 0;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #EA580C, #CA8A04, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .brand-org {
+    margin: 4px 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #EA580C;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* ── Section Badge & Description ── */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(234, 88, 12, 0.08);
+  border: 1px solid rgba(234, 88, 12, 0.18);
+  color: #EA580C;
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin-bottom: 8px;
+}
+
+.section-desc {
+  font-size: 0.88rem;
+  color: #52525B;
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
+/* ── Form Inputs ── */
+.form-label {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #3F3F46;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  i {
+    color: #EA580C;
+  }
+
+  .req {
+    color: #DC2626;
+  }
+
+  .opt {
+    font-weight: 400;
+    color: #8F8F9D;
+    font-size: 0.78rem;
+  }
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  padding: 11px 16px;
+  font-size: 0.95rem;
+  background-color: #FFFFFF;
+  color: #18181B;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #A1A1AA;
+  }
+
+  &:focus {
+    border-color: #EA580C;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  }
+}
+
+/* ── Fee Notice Banner ── */
+.fee-notice-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #FFFDF5, #FFFBEB);
+  border: 1.5px dashed rgba(202, 138, 4, 0.35);
+  border-radius: 14px;
+
+  .fee-left {
+    display: flex;
+    flex-direction: column;
+
+    .fee-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #8F8F9D;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .fee-amount {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #CA8A04;
+      line-height: 1;
+    }
+  }
+
+  .fee-right {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #52525B;
+    text-align: right;
+  }
+}
+
+/* ── Submit Button ── */
+.btn-submit-reg {
+  background: linear-gradient(135deg, #EA580C, #F59E0B);
+  border: none;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 13px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.28);
+  transition: all 0.25s ease;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #F97316, #FBBF24);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(234, 88, 12, 0.38);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+
+/* ==============================================
+   STATE 2: DIGITAL TOKEN CARD (PENDING)
+   ============================================== */
+.token-badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.84rem;
+  margin-bottom: 16px;
+  width: 100%;
+  justify-content: center;
+
+  &.pending {
+    background: rgba(217, 119, 6, 0.1);
+    color: #D97706;
+    border: 1px solid rgba(217, 119, 6, 0.25);
+  }
+}
+
+.status-dot-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D97706;
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+.digital-token-card {
+  background: linear-gradient(135deg, #FFFDF5, #FFF7ED);
+  border: 2px solid rgba(234, 88, 12, 0.25);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.08);
+
+  .token-card-header {
+    text-align: center;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed rgba(234, 88, 12, 0.2);
+    margin-bottom: 16px;
+
+    .token-subtitle {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #8F8F9D;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .token-number {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #EA580C;
+      margin: 4px 0 0;
+      letter-spacing: 1px;
+      font-family: 'Baloo 2', sans-serif;
+    }
+  }
+
+  .token-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+
+      .detail-label {
+        font-size: 0.74rem;
+        font-weight: 600;
+        color: #8F8F9D;
+        text-transform: uppercase;
+      }
+
+      .detail-value {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #18181B;
+
+        &.highlight {
+          color: #CA8A04;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  .token-instruction {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: 14px;
+
+    .inst-icon {
+      color: #EA580C;
+      font-size: 1.1rem;
+    }
+
+    .inst-text {
+      font-size: 0.82rem;
+      color: #52525B;
+      line-height: 1.4;
+    }
+  }
+
+  .live-sync-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8F8F9D;
+
+    .sync-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(234, 88, 12, 0.2);
+      border-top-color: #EA580C;
+      border-radius: 50%;
+      animation: spinSync 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spinSync {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ==============================================
+   STATE 3: CONFIRMED PLAYER PASS
+   ============================================== */
+.confirmed-container {
+  text-align: center;
+}
+
+.success-confetti-header {
+  margin-bottom: 18px;
+
+  .success-check-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #059669, #10B981);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 12px;
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+  }
+
+  .confirmed-title {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #059669;
+    margin: 0;
+  }
+
+  .confirmed-sub {
+    font-size: 0.85rem;
+    color: #52525B;
+    margin: 4px 0 0;
+  }
+}
+
+.official-pass-card {
+  background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+  border: 2px solid rgba(5, 150, 105, 0.25);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
+  text-align: left;
+
+  .pass-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(5, 150, 105, 0.15);
+
+    .pass-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #059669;
+      letter-spacing: 1px;
+    }
+
+    .paid-badge {
+      background: #059669;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+  }
+
+  .pass-player-number-box {
+    text-align: center;
+    padding: 16px 0;
+
+    .number-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #059669;
+      letter-spacing: 1.5px;
+    }
+
+    .big-player-number {
+      font-size: 3.6rem;
+      font-weight: 800;
+      color: #059669;
+      line-height: 1;
+      font-family: 'Baloo 2', sans-serif;
+      margin-top: 4px;
+    }
+  }
+
+  .pass-info-list {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+
+    .pass-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 0.9rem;
+      color: #52525B;
+
+      strong {
+        color: #18181B;
+      }
+    }
+  }
+
+  .pass-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    color: #059669;
+    font-weight: 600;
+
+    .btn-print-pass {
+      background: transparent;
+      border: 1px solid rgba(5, 150, 105, 0.3);
+      color: #059669;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(5, 150, 105, 0.1);
+      }
+    }
+  }
+}
+
+.confirmed-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &.btn-scoreboard {
+      background: linear-gradient(135deg, #EA580C, #F59E0B);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.2);
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    &.btn-scorecheck {
+      background: #FFFFFF;
+      border: 1.5px solid rgba(234, 88, 12, 0.3);
+      color: #EA580C;
+
+      &:hover {
+        background: #FFF7ED;
+      }
+    }
+  }
+}
+
+/* ── Card Footer ── */
+.card-footer-branding {
+  text-align: center;
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.84rem;
+  color: #8F8F9D;
+
+  strong {
+    color: #EA580C;
+  }
+}

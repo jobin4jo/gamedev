@@ -12,6 +12,7 @@ import { ScoreboardComponent } from './Components/scoreboard/scoreboard.componen
 import { HttpClientModule } from  '@angular/common/http';
 import { SnackbarComponent } from './utility/snackbar/snackbar.component';
 import { ScoreCheckComponent } from './Components/score-check/score-check.component';
+import { SelfRegisterComponent } from './Components/self-register/self-register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { ScoreCheckComponent } from './Components/score-check/score-check.compon
     ScoreboardComponent,
     SnackbarComponent,
     ScoreCheckComponent,
+    SelfRegisterComponent,
   ],
   imports: [
     BrowserModule,

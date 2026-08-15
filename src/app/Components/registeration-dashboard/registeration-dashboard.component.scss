@@ -1,0 +1,94 @@
+/* ============================================
+   🌞 PLAYER REGISTRATION — DAYLIGHT THEME
+   ============================================ */
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #FFF7ED, #FFEDD5) !important;
+  border-bottom: 1px solid rgba(234, 88, 12, 0.15);
+  padding: 16px 20px;
+
+  h5 {
+    color: #EA580C;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+}
+
+.card-body {
+  padding: 24px 28px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #52525B;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+
+  &:focus {
+    border-color: #EA580C;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  }
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #EA580C, #F59E0B) !important;
+  border: none !important;
+  color: #FFFFFF !important;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+  transition: all 0.25s ease;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #F97316, #FBBF24) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(234, 88, 12, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.modal-content {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header.bg-success {
+  background: linear-gradient(135deg, #059669, #10B981) !important;
+  color: #FFFFFF;
+}
+
+.modal-footer .btn-primary {
+  background: linear-gradient(135deg, #EA580C, #F59E0B);
+  border: none;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 8px 20px;
+}

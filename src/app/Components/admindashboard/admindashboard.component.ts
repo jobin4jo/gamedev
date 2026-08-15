@@ -27,6 +27,7 @@ export class AdmindashboardComponent implements OnInit {
     this.userName = localStorage.getItem('userName');
     this.fetchMangerList();
     this.fetchAllusers();
+    this.loadPendingList();
   }
 
   selectedTab: string = 'managers';
@@ -241,5 +242,78 @@ export class AdmindashboardComponent implements OnInit {
         this.loader.hide();
       }
     });
+  }
+
+  // ── Counter Approvals & Self-Registration Queue ──
+  pendingList: any[] = [];
+  filteredPendingList: any[] = [];
+  pendingSearchTerm: string = '';
+  activatedPlayerModalData: any = null;
+
+  loadPendingList() {
+    this.service.getPendingSelfRegistrations().subscribe({
+      next: (list: any[]) => {
+        this.pendingList = Array.isArray(list) ? list.filter((item: any) => item.status === 'pending') : [];
+        this.applyPendingFilter();
+      },
+      error: () => {
+        this.pendingList = [];
+        this.applyPendingFilter();
+      }
+    });
+  }
+
+  onPendingSearch() {
+    this.applyPendingFilter();
+  }
+
+  applyPendingFilter() {
+    if (!this.pendingSearchTerm || !this.pendingSearchTerm.trim()) {
+      this.filteredPendingList = [...this.pendingList];
+      return;
+    }
+    const term = this.pendingSearchTerm.trim().toLowerCase();
+    this.filteredPendingList = this.pendingList.filter((item: any) => {
+      const id = item.tokenId || item.id || '';
+      const matchToken = id.toLowerCase().includes(term);
+      const matchName = item.name ? item.name.toLowerCase().includes(term) : false;
+      const matchPhone = item.phone ? item.phone.toLowerCase().includes(term) : false;
+      const matchPlace = item.place ? item.place.toLowerCase().includes(term) : false;
+      return matchToken || matchName || matchPhone || matchPlace;
+    });
+  }
+
+  approveSelfRegistration(token: any, paymentMode: string = 'cash') {
+    const tokenId = token.tokenId || token.id;
+    this.loader.show();
+    this.service.approveSelfRegistration(tokenId, paymentMode).subscribe({
+      next: (res: any) => {
+        this.loader.hide();
+        this.activatedPlayerModalData = {
+          token: tokenId,
+          name: token.name,
+          place: token.place,
+          officialNumber: res?.userNumber || res?.user?.userNumber,
+          paymentMode
+        };
+        this.loadPendingList();
+      },
+      error: (err: any) => {
+        this.loader.hide();
+        this.errorMessage = err?.error?.error || 'Failed to activate player.';
+        setTimeout(() => { this.errorMessage = null; }, 3000);
+      }
+    });
+  }
+
+  rejectSelfRegistration(token: any) {
+    const tokenId = token.tokenId || token.id;
+    if (confirm(`Are you sure you want to cancel token ${tokenId} for ${token.name}?`)) {
+      this.service.rejectSelfRegistration(tokenId).subscribe({
+        next: () => {
+          this.loadPendingList();
+        }
+      });
+    }
   }
 }

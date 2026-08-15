@@ -6,11 +6,13 @@ import { RegisterationDashboardComponent } from './Components/registeration-dash
 import { AdmindashboardComponent } from './Components/admindashboard/admindashboard.component';
 import { ScoreboardComponent } from './Components/scoreboard/scoreboard.component';
 import { ScoreCheckComponent } from './Components/score-check/score-check.component';
+import { SelfRegisterComponent } from './Components/self-register/self-register.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'manager', component:GamemanagerdashboardComponent},
   {path:"register",component:RegisterationDashboardComponent},
+  {path:"self-register",component:SelfRegisterComponent},
   {path:'admin',component:AdmindashboardComponent},
   {path:"score-board",component:ScoreboardComponent},
   {path:'score-check',component:ScoreCheckComponent},

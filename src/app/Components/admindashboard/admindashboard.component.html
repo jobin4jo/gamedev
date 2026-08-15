@@ -28,6 +28,12 @@
                     <i class="bi bi-people-fill"></i> Leaderboard</a>
             </li>
             <li class="nav-item" style="cursor: pointer;">
+                <a class="nav-link" [class.active]="selectedTab === 'pendingApprovals'" (click)="selectTab('pendingApprovals'); loadPendingList()">
+                    <i class="bi bi-qr-code-scan"></i> Counter Approvals
+                    <span class="badge bg-danger ms-1" *ngIf="pendingList.length > 0">{{ pendingList.length }}</span>
+                </a>
+            </li>
+            <li class="nav-item" style="cursor: pointer;">
                 <a class="nav-link" [class.active]="selectedTab === 'playerRegister'"
                     (click)="selectTab('playerRegister')"> <i class="bi bi-person-add"></i> PlayerRegister</a>
             </li>
@@ -36,6 +42,104 @@
             </li>
         </ul>
 
+
+        <!-- Counter Approvals (Self-Registration Queue) -->
+        <div *ngIf="selectedTab === 'pendingApprovals'">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h5 class="festival-heading mb-1">Cash Counter & Self-Registration Approvals</h5>
+                    <p class="text-muted small m-0">Verify participant tokens, collect ₹50 entry fee, and assign the next sequential player number.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a routerLink="/self-register" target="_blank" class="btn btn-outline-warning btn-sm">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Open Self-Register Form
+                    </a>
+                    <button class="btn btn-primary btn-sm" (click)="loadPendingList()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Refresh Queue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activation Success Banner -->
+            <div *ngIf="activatedPlayerModalData" class="alert alert-success d-flex justify-content-between align-items-center shadow-sm">
+                <div>
+                    <h6 class="alert-heading mb-1">
+                        <i class="bi bi-check-circle-fill me-1"></i> Player Activated Successfully!
+                    </h6>
+                    <div>
+                        <strong>{{ activatedPlayerModalData.name }}</strong> (Token: {{ activatedPlayerModalData.token }}) is assigned 
+                        <span class="badge bg-success fs-6 ms-1">Official Player #{{ activatedPlayerModalData.officialNumber }}</span>
+                    </div>
+                </div>
+                <button class="btn-close" (click)="activatedPlayerModalData = null"></button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="row g-2 mb-3">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search by Token (e.g. TK-1042), Name, Phone..."
+                               [(ngModel)]="pendingSearchTerm" (input)="onPendingSearch()">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 d-flex align-items-center text-muted small">
+                    Showing {{ filteredPendingList.length }} pending token(s)
+                </div>
+            </div>
+
+            <!-- Table of Pending Tokens -->
+            <div class="table-responsive" *ngIf="filteredPendingList.length > 0">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Token ID</th>
+                            <th>Player Name</th>
+                            <th>Place</th>
+                            <th>Phone</th>
+                            <th>Fee</th>
+                            <th>Payment Mode</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of filteredPendingList">
+                            <td>
+                                <span class="badge bg-warning text-dark fs-6 font-monospace">{{ item.id }}</span>
+                            </td>
+                            <td><strong>{{ item.name }}</strong></td>
+                            <td>{{ item.place }}</td>
+                            <td>{{ item.phone || '-' }}</td>
+                            <td>
+                                <span class="badge bg-light text-dark border">₹{{ item.amount }}</span>
+                            </td>
+                            <td>
+                                <select #payMode class="form-select form-select-sm" style="width: 110px;">
+                                    <option value="cash">💵 Cash</option>
+                                    <option value="upi">📱 UPI</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn onam-btn btn-sm" (click)="approveSelfRegistration(item, payMode.value)">
+                                        <i class="bi bi-check-circle me-1"></i> Collect ₹{{ item.amount }} & Activate
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" (click)="rejectSelfRegistration(item)" title="Cancel Token">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="filteredPendingList.length === 0" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                <h6>No pending registrations right now</h6>
+                <p class="small">Participants who register via mobile/QR code will appear here in real-time.</p>
+            </div>
+        </div>
 
         <!-- player register -->
         <div *ngIf="selectedTab === 'playerRegister'">

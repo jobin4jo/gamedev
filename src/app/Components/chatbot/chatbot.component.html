@@ -1,0 +1,94 @@
+<!-- Floating Chat Trigger Button -->
+<button class="chat-trigger-btn" (click)="toggleChat()" [class.open]="isOpen">
+  <div class="icon-container">
+    <i class="bi" [class.bi-chat-dots-fill]="!isOpen" [class.bi-x-lg]="isOpen"></i>
+  </div>
+  <span class="badge-count" *ngIf="unreadCount > 0 && !isOpen">{{ unreadCount }}</span>
+  <span class="pulse-ring"></span>
+</button>
+
+<!-- Chat Window Container -->
+<div class="chat-window-card" [class.show]="isOpen">
+  <!-- Chat Header -->
+  <div class="chat-header">
+    <div class="bot-info">
+      <div class="avatar-container">
+        <div class="bot-avatar">
+          <i class="bi bi-robot"></i>
+        </div>
+        <span class="status-indicator"></span>
+      </div>
+      <div class="name-status">
+        <h3>Maveli Bot</h3>
+        <p>Onam Games Assistant</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="action-btn" title="Restart Chat" (click)="clearChat()">
+        <i class="bi bi-arrow-counterclockwise"></i>
+      </button>
+      <button class="action-btn" title="Minimize" (click)="toggleChat()">
+        <i class="bi bi-dash-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages List Container -->
+  <div class="chat-messages-container" #scrollContainer>
+    <div *ngFor="let msg of messages" [ngClass]="{'user-msg-row': msg.sender === 'user', 'bot-msg-row': msg.sender === 'bot'}">
+      <div class="msg-avatar" *ngIf="msg.sender === 'bot'">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="msg-bubble">
+        <p class="msg-text">{{ msg.text }}</p>
+        <span class="msg-time">{{ msg.time | date:'shortTime' }}</span>
+      </div>
+    </div>
+
+    <!-- Animated Typing Indicator -->
+    <div class="bot-msg-row" *ngIf="isTyping">
+      <div class="msg-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="msg-bubble typing-bubble">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Suggestions -->
+  <div class="chat-suggestions-container" *ngIf="messages.length < 6">
+    <button 
+      *ngFor="let suggestion of suggestions" 
+      class="suggestion-pill"
+      (click)="selectSuggestion(suggestion)">
+      {{ suggestion }}
+    </button>
+  </div>
+
+  <!-- Input Footer -->
+  <div class="chat-footer">
+    <div class="input-wrapper">
+      <button class="footer-icon-btn" title="Emojis">
+        <i class="bi bi-emoji-smile"></i>
+      </button>
+      <input 
+        type="text" 
+        placeholder="Type your question..." 
+        [(ngModel)]="userInput" 
+        (keyup.enter)="sendMessage()"
+        class="chat-input"
+      />
+      <button class="footer-icon-btn" title="Voice Input">
+        <i class="bi bi-mic"></i>
+      </button>
+    </div>
+    <button class="send-message-btn" (click)="sendMessage()" [disabled]="!userInput.trim()">
+      <i class="bi bi-send-fill"></i>
+    </button>
+  </div>
+</div>

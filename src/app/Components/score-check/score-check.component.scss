@@ -1,73 +1,157 @@
+/* ============================================
+   🌞 SCORE CHECK — DAYLIGHT THEME
+   ============================================ */
+
 .festival-bg {
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-  padding: 20px;
+  background-color: #F8F6F0;
+  padding: 30px 16px;
+  position: relative;
+  overflow: hidden;
 }
 
 .festival-title {
-  font-size: clamp(22px, 5vw, 32px);
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(24px, 5vw, 34px);
   font-weight: 700;
-  color: #fff;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #EA580C, #CA8A04, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
 }
 
 .festival-sub {
-  font-size: clamp(14px, 3.5vw, 18px);
-  color: #f5f5f5;
+  font-size: clamp(14px, 3.5vw, 16px);
+  color: #52525B;
+  font-weight: 500;
 }
 
 .festival-card {
-  max-width: 420px;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  max-width: 480px;
+  border-radius: 20px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+  padding: 28px !important;
 }
 
-.result h2 {
-  color: #6a5acd;
-  margin-top: 10px;
-  font-size: 20px;
+.form-label {
+  font-weight: 700;
+  color: #52525B;
+  font-size: 0.9rem;
 }
 
-.result .score {
-  font-size: 18px;
-  font-weight: 600;
-}
-.result .score span {
-  font-size: 30px;
-  font-weight: 800;
-  color: #ff6f61;
-}
-.festival-bg {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b, #fcd34d); /* Onam Yellow-Orange */
-  padding: 20px;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
+.input-group {
+  .form-control {
+    border-radius: 10px 0 0 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 11px 16px;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: #EA580C;
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+    }
+  }
 }
 
-/* Optional festive pattern overlay (banana leaf, flowers, etc.) */
-// .festival-bg::after {
-//   content: "";
-//   position: absolute;
-//   inset: 0;
-//   background: url('assets/onam-bg.png') no-repeat center center / cover;
-//   opacity: 0.15; /* keep it subtle */
-//   z-index: 0;
-// }
+.check-btn {
+  background: linear-gradient(135deg, #EA580C, #F59E0B);
+  border: none;
+  color: #FFFFFF;
+  padding: 10px 24px;
+  border-radius: 0 10px 10px 0;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #F97316, #FBBF24);
+  }
 
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
 
+.result {
+  h2 {
+    color: #EA580C;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    margin-top: 14px;
+  }
+
+  .score {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #52525B;
+
+    span {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #CA8A04;
+      display: inline-block;
+      margin: 0 4px;
+    }
+  }
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 12px;
+
+  thead {
+    background: linear-gradient(135deg, #FFF7ED, #FFFBEB) !important;
+    th {
+      color: #52525B !important;
+      background: transparent !important;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 14px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  tbody tr td {
+    padding: 10px 14px;
+    color: #18181B;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+}
+
+hr {
+  border-color: rgba(0, 0, 0, 0.08);
+  margin: 18px 0;
+}
+
+.developed-by {
+  font-size: 0.85rem;
+  color: #8F8F9D;
+
+  strong {
+    color: #EA580C;
+  }
+}
+
+/* Floating Petals */
 @keyframes floatPetals {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0.8; }
   100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
 .petal {
   position: fixed;
   top: -50px;
-  font-size: 24px;
-  animation: floatPetals 10s linear infinite;
-  z-index: 1;
+  font-size: 20px;
+  animation: floatPetals 14s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .petal:nth-child(1) { left: 10%; animation-duration: 12s; }
@@ -75,71 +159,3 @@
 .petal:nth-child(3) { left: 50%; animation-duration: 18s; }
 .petal:nth-child(4) { left: 70%; animation-duration: 20s; }
 .petal:nth-child(5) { left: 90%; animation-duration: 22s; }
-
-
-.check-btn {
-  background: linear-gradient(90deg, #ff9800, #ff5722); /* orange festival gradient */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  font-family: 'Baloo 2', cursive; /* playful font */
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3);
-}
-
-.check-btn:hover {
-  transform: scale(1.07);
-  background: linear-gradient(90deg, #ff5722, #e91e63); /* hover gradient */
-  box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
-}
-
-
-.developed-by {
-    font-size: 0.9rem;
-    color: #666;
-}
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.score-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px auto;
-  font-size: 16px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.score-table th, 
-.score-table td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.score-table th {
-  background: #4CAF50;
-  color: white;
-}
-
-.score-table tr:nth-child(even) {
-  background: #f9f9f9;
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  .score-table {
-    font-size: 14px;
-  }
-  .score-table th, .score-table td {
-    padding: 8px;
-  }
-}

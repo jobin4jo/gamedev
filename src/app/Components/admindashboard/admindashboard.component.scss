@@ -1,178 +1,184 @@
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .nav-pills {
-    flex-direction: column;
-  }
-  table {
-    font-size: 14px;
-  }
-  .btn {
-    width: 100%;
-    margin-top: 5px;
-  }
+/* ============================================
+   🌞 ADMIN DASHBOARD — DAYLIGHT CLEAN THEME
+   ============================================ */
+
+.container-fluid {
+  background-color: #F8F6F0;
+  min-height: 100vh;
+  padding: 24px;
 }
 
-
-
-/* === Festival Card Container === */
+/* === Main Dashboard Card === */
 .festival-card {
-  border: 3px solid orange;
-  border-radius: 12px;
-  background: linear-gradient(180deg, #fff8e1, #ffe0b2);
-  box-shadow: 0 4px 8px rgba(255, 165, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  padding: 24px !important;
 }
 
-/* === Header Title === */
+/* === Welcome Header === */
 .festival-card h4 {
-  color: #e65100;
-  font-weight: bold;
+  color: #18181B;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 0;
 }
 
-/* === Logout Button Festival Style === */
-.logout-btn {
-  background: linear-gradient(90deg, #ef5350, #d32f2f);
-  border: none;
-  color: white;
-  font-weight: bold;
-}
-
-.logout-btn:hover {
-  background: linear-gradient(90deg, #d32f2f, #b71c1c);
-}
-
-/* === Nav Pills Festival Style === */
-.nav-pills .nav-link {
-  background: #ffe082;
-  color: #e65100;
-  font-weight: bold;
-  margin: 2px;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-.nav-pills .nav-link.active {
-  background: linear-gradient(90deg, #ff9800, #f57c00);
-  color: white;
-}
-
-/* === Form Controls Festival Border === */
-.festival-card .form-control,
-.festival-card .form-select {
-  border: 2px solid orange;
-  border-radius: 8px;
-}
-
-/* === Add Manager Button === */
-.btn-add-manager {
-  background: linear-gradient(90deg, #ffa726, #fb8c00);
-  border: none;
-  color: white;
-  font-weight: bold;
-}
-
-.btn-add-manager:hover {
-  background: linear-gradient(90deg, #fb8c00, #ef6c00);
-}
-
-/* === Edit & Delete Buttons Matching Theme === */
-.btn-warning {
-  background: #ffca28;
-  color: #795548;
-  border: none;
-  font-weight: bold;
-}
-
-.btn-warning:hover {
-  background: #ffc107;
-}
-
+/* === Logout Button === */
+.logout-btn,
 .btn-danger {
-  background: #ef5350;
+  background: linear-gradient(135deg, #DC2626, #EF4444);
   border: none;
-}
-
-.btn-danger:hover {
-  background: #e53935;
-}
-
-/* === Leaderboard Table === */
-.table-hover thead {
-  background: linear-gradient(90deg, #ffb300, #ff6f00);
-  color: white;
-}
-
-.table-hover td,
-.table-hover th {
-  border: 1px solid orange;
-}
-
-/* === Mobile Responsive Fixes === */
-@media (max-width: 576px) {
-  .d-flex {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .nav-pills {
-    flex-direction: column;
-  }
-  .btn-add-manager,
-  .logout-btn {
-    width: 100%;
-  }
-}
-
-/* styles.css */
-.festival-label {
-  font-weight: 600;                 /* Bold */
-  font-family: "Comic Sans MS", cursive, sans-serif; /* Playful look */
-  color: #d63384;                   /* Festive pink/purple */
-  text-shadow: 1px 1px 2px #ffd700; /* Golden glow */
-  letter-spacing: 0.5px;            /* Slight spacing */
-}
-
-.festival-option {
-  background: #fff7e6;   /* light festive background */
-  color: #d63384;        /* pinkish text */
+  color: #FFFFFF;
   font-weight: 600;
-  padding: 6px;
+  border-radius: 8px;
+  padding: 7px 16px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #B91C1C, #DC2626);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+  }
 }
 
+/* === Navigation Tabs (Pills) === */
+.nav-pills {
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 16px;
 
-//chart
-.chart-container {
-  text-align: left;
-  font-family: Arial, sans-serif;
-  margin-top: 20px;
+  .nav-item {
+    cursor: pointer;
+  }
+
+  .nav-link {
+    background: #F4F4F5;
+    color: #52525B;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      background: #FFF7ED;
+      color: #EA580C;
+      border-color: rgba(234, 88, 12, 0.2);
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #EA580C, #F59E0B);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);
+    }
+  }
 }
 
-.chart-title {
-  color: #d35400;
-  margin-bottom: 10px;
+/* === Form Controls & Labels === */
+.festival-heading {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #EA580C;
+  margin-bottom: 16px;
 }
 
-.pie-chart {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  margin: auto;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.legend li {
-  display: flex;
-  align-items: center;
+.festival-label,
+.form-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #52525B;
   margin-bottom: 5px;
 }
 
-.legend span {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 8px;
-  border-radius: 50%;
+.form-control,
+.form-select {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 9px 14px;
+  background: #FFFFFF;
+  color: #18181B;
+
+  &:focus {
+    border-color: #EA580C;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  }
 }
 
-.completed { background-color: #27ae60; }
-.inprogress { background-color: #f1c40f; }
-.played { background-color: #e67e22; }
-.notplayed { background-color: #e74c3c; }
+/* === Table Styling === */
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 16px;
+
+  thead {
+    background: linear-gradient(135deg, #FFF7ED, #FFFBEB);
+    th {
+      color: #52525B;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 16px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background 0.15s ease;
+      &:hover {
+        background: #FFFDF5;
+      }
+      td {
+        padding: 12px 16px;
+        color: #18181B;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+/* === Action Buttons === */
+.btn-warning {
+  background: #FEF3C7;
+  color: #D97706;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 6px 12px;
+
+  &:hover {
+    background: #FDE68A;
+    color: #B45309;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 12px;
+  }
+
+  .nav-pills {
+    flex-direction: column;
+    .nav-link {
+      width: 100%;
+    }
+  }
+
+  .table {
+    font-size: 13px;
+  }
+}

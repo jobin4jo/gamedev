@@ -1,73 +1,184 @@
-<div class="container-fluid p-3">
-    <div class="card festival-table shadow-sm p-3">
-        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-            <h4 class="loading-bar1">Happy Onam! May your life bloom with joy and prosperity</h4>
-            <div class="loading-bar">Welcome to all, Good luck for your games </div>
+<div class="scoreboard-wrapper">
 
-            <button class="btn btn-danger btn-sm" (click)="onGetUpdate()"> <i
-                    class="bi bi-arrow-clockwise"></i>&nbsp;Refresh</button>
-            <button class="btn btn-success btn-sm" routerLink="/admin"> <i class="bi bi-box-arrow-left"></i>
-                &nbsp;Back</button>
+  <!-- Floating particles & flowers background -->
+  <div class="particles">
+    <span *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12]" class="particle"></span>
+  </div>
 
+  <!-- Authentic Onam Flower Shower (Athappookkalam Vibe) -->
+  <div class="falling-flowers">
+    <span class="flower-petal f1">🌼</span>
+    <span class="flower-petal f2">🌺</span>
+    <span class="flower-petal f3">🏵️</span>
+    <span class="flower-petal f4">🪷</span>
+    <span class="flower-petal f5">🌻</span>
+    <span class="flower-petal f6">💮</span>
+    <span class="flower-petal f7">🌼</span>
+    <span class="flower-petal f8">🌺</span>
+    <span class="flower-petal f9">🌿</span>
+    <span class="flower-petal f10">🏵️</span>
+    <span class="flower-petal f11">🪷</span>
+    <span class="flower-petal f12">🌼</span>
+    <span class="flower-petal f13">🌺</span>
+    <span class="flower-petal f14">🌻</span>
+    <span class="flower-petal f15">🌿</span>
+    <span class="flower-petal f16">🏵️</span>
+  </div>
+
+  <!-- Ambient glow orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+
+  <!-- Header Section -->
+  <header class="scoreboard-header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="onam-emblem">
+          <span class="emblem-icon">🪷</span>
+          <div class="emblem-ring"></div>
         </div>
-
-
-        <!-- Users Overview -->
-        <div class="table-responsive" style="max-height: 650px; overflow-y: auto;">
-            <!-- <h5>Users Overview</h5> -->
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary  sticky-header">
-                    <tr>
-                        <th>Sl.No</th>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Place</th>
-                        <th>User Number</th>
-                        <th>Status</th>
-                        <th>Scores (G1-G5)</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let player of players  let i = index" [ngClass]="player.rankClass">
-                        <td>{{i + 1}}</td>
-                        <td>{{player.rank}}</td>
-                        <td>{{player.name}}</td>
-                        <td>{{player.place}}</td>
-                        <td>{{player.userNumber}}</td>
-                        <td>{{player.status}}</td>
-                        <td>{{player.points}}</td>
-                        <td>{{player.totalPoints}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="header-text">
+          <h1 class="title-main">Onam Scoreboard</h1>
+          <p class="title-org">St. Little Flower Syrian MSC Church Pushpagiri • MCYM</p>
+          <p class="title-sub">May your life bloom with joy and prosperity ✨</p>
         </div>
-
-        <!-- Leaderboard -->
-        <!-- <div *ngIf="selectedTab === 'leaderboard'" class="table-responsive">
-            <h5>Leaderboard</h5>
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Total Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let l of leaderboard; let i = index">
-                        <td>{{i + 1}}</td>
-                        <td>{{l.name}}</td>
-                        <td>{{l.total}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
+      </div>
+      <div class="header-actions">
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span class="live-text">Live</span>
+        </div>
+        <button class="btn-premium btn-refresh" (click)="onGetUpdate()">
+          <i class="bi bi-arrow-clockwise"></i>
+          <span>Refresh</span>
+        </button>
+        <button class="btn-premium btn-back" routerLink="/admin">
+          <i class="bi bi-arrow-left-circle"></i>
+          <span>Back</span>
+        </button>
+      </div>
     </div>
+  </header>
+
+
+  <!-- Full Leaderboard Table -->
+  <section class="leaderboard-section">
+    <div class="leaderboard-card">
+      <div class="leaderboard-header-bar">
+        <h2 class="leaderboard-title">
+          <i class="bi bi-trophy"></i>
+          Full Leaderboard
+        </h2>
+        <div class="header-bar-right">
+          <div class="search-box">
+            <i class="bi bi-search search-icon"></i>
+            <input #searchInput type="text" class="search-input" placeholder="Search player # or name..."
+              (input)="onSearch($event)" />
+            <button *ngIf="searchTerm" type="button" class="btn-clear-search" (click)="clearSearch(searchInput)">
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+          </div>
+          <span class="player-count">
+            <i class="bi bi-people-fill"></i>
+            {{ players.length }} {{ players.length === 1 ? 'Player' : 'Players' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="table-scroll-container">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th class="th-rank">#</th>
+              <th class="th-rank">Rank</th>
+              <th class="th-name">Player</th>
+              <th class="th-place">Place</th>
+              <th class="th-number">Number</th>
+              <th class="th-status">Status</th>
+              <th class="th-scores">Scores (G1–G5)</th>
+              <th class="th-total">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let player of players; let i = index; trackBy: trackByPlayer" class="player-row"
+              [ngClass]="player.rankClass" [style.animation-delay]="(i * 0.04) + 's'">
+              <td class="cell-sl">
+                <span *ngIf="player.rank <= 3" class="sl-label" [ngClass]="'sl-label-' + player.rank">{{ player.rank
+                  }}</span>
+                <span *ngIf="player.rank > 3">{{ player.rank }}</span>
+              </td>
+              <td class="cell-rank">
+                <span *ngIf="player.rank <= 3" class="rank-badge" [ngClass]="'rank-badge-' + player.rank">
+                  <span *ngIf="player.rank === 1">🥇</span>
+                  <span *ngIf="player.rank === 2">🥈</span>
+                  <span *ngIf="player.rank === 3">🥉</span>
+                </span>
+                <span *ngIf="player.rank > 3">{{ player.rank }}</span>
+              </td>
+              <td class="cell-name">
+                <div class="player-info">
+                  <div class="player-avatar" [ngClass]="player.rank <= 3 ? 'avatar-rank-' + player.rank : ''">
+                    {{ player.name?.charAt(0)?.toUpperCase() }}
+                  </div>
+                  <div class="player-meta">
+                    <span class="player-name-text">{{ player.name }}</span>
+                    <span class="player-place-sub" *ngIf="player.place">
+                      <i class="bi bi-geo-alt"></i> {{ player.place }}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td class="cell-place">{{ player.place }}</td>
+              <td class="cell-number">
+                <span class="number-badge">{{ player.userNumber }}</span>
+              </td>
+              <td class="cell-status">
+                <span class="status-pill" [ngClass]="{
+                        'status-completed': player.status === 'Completed',
+                        'status-in-progress': player.status === 'In Progress',
+                        'status-not-played': player.status === 'Not Yet Played'
+                      }">
+                  <i class="bi" [ngClass]="{
+                       'bi-check-circle-fill': player.status === 'Completed',
+                       'bi-hourglass-split': player.status === 'In Progress',
+                       'bi-dash-circle': player.status === 'Not Yet Played'
+                     }"></i>
+                  {{ player.status }}
+                </span>
+              </td>
+              <td class="cell-scores">
+                <div class="score-chips">
+                  <span *ngFor="let s of player.points; let gi = index" class="score-chip"
+                    [ngClass]="{ 'chip-null': s === '-', 'chip-zero': s === 0, 'chip-high': s >= 8 }">
+                    <span class="chip-label">G{{ gi + 1 }}</span>
+                    <span class="chip-value">{{ s }}</span>
+                  </span>
+                </div>
+              </td>
+              <td class="cell-total">
+                <div class="total-score-wrap">
+                  <span class="total-score">{{ player.totalPoints }}</span>
+                  <div class="score-bar">
+                    <div class="score-bar-fill"
+                      [style.width.%]="players[0]?.totalPoints ? (player.totalPoints / players[0].totalPoints * 100) : 0">
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="players.length === 0" class="no-results-row">
+              <td colspan="8" class="no-results-cell">
+                <div class="empty-state">
+                  <i class="bi bi-search"></i>
+                  <p>No player found matching "<strong>{{ searchTerm }}</strong>"</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
 </div>
-
-
-<!-- Right-to-left (classic ticker) -->
-<marquee direction="left" behavior="scroll" scrollamount="6" scrolldelay="50">
-    <h4> ✨ “Onam greetings! This application is lovingly built by Jo4Tech team</h4>
-</marquee>
