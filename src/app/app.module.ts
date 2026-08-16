@@ -12,6 +12,7 @@ import { ScoreboardComponent } from './Components/scoreboard/scoreboard.componen
 import { HttpClientModule } from  '@angular/common/http';
 import { SnackbarComponent } from './utility/snackbar/snackbar.component';
 import { ScoreCheckComponent } from './Components/score-check/score-check.component';
+import { CountDownComponent } from './Components/count-down/count-down.component';
 import { SelfRegisterComponent } from './Components/self-register/self-register.component';
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SelfRegisterComponent } from './Components/self-register/self-register.
     ScoreboardComponent,
     SnackbarComponent,
     ScoreCheckComponent,
+    CountDownComponent,
     SelfRegisterComponent,
   ],
   imports: [

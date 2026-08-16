@@ -6,6 +6,7 @@ import { RegisterationDashboardComponent } from './Components/registeration-dash
 import { AdmindashboardComponent } from './Components/admindashboard/admindashboard.component';
 import { ScoreboardComponent } from './Components/scoreboard/scoreboard.component';
 import { ScoreCheckComponent } from './Components/score-check/score-check.component';
+import { CountDownComponent } from './Components/count-down/count-down.component';
 import { SelfRegisterComponent } from './Components/self-register/self-register.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'admin',component:AdmindashboardComponent},
   {path:"score-board",component:ScoreboardComponent},
   {path:'score-check',component:ScoreCheckComponent},
+  {path:'Countdown', component:CountDownComponent }
 ];
 
 @NgModule({
