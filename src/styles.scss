@@ -1,49 +1,99 @@
+/* ============================================
+   🌞 GLOBAL DAYLIGHT THEME — ONAM APP
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Pacifico&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-body: #F8F6F0;
+  --bg-card: #FFFFFF;
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --text-muted: #8F8F9D;
+  --accent-saffron: #EA580C;
+  --accent-marigold: #CA8A04;
+  --accent-green: #059669;
+  --border-soft: rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-image: url('assets/4029917.jpg');
-  background-size: cover;       /* Fill screen */
-  background-position: center;  /* Center the image */
-  background-repeat: no-repeat; /* Avoid tiling */
-  height: 100vh;                /* Full height */
+  background-color: #F8F6F0;
+  font-family: 'Baloo 2', 'Inter', system-ui, -apple-system, sans-serif;
+  color: #18181B;
+  min-height: 100vh;
   margin: 0;
-
-  /* Create a blur effect */
-  position: relative;
+  padding: 0;
 }
 
-body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: inherit; /* Inherit background image */
-  filter: blur(4px);   /* Adjust blur level */
-  z-index: -1;         /* Keep it behind content */
-}
-/* styles.css */
+/* Global Festival Title */
 .festival-heading {
+  font-family: 'Pacifico', cursive;
   font-weight: 700;
-  font-size: 1.5rem;
-  background: linear-gradient(90deg, #ff7f50, #ff1493, #ffcc00);
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #EA580C, #CA8A04, #059669);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-  letter-spacing: 1px;
+  background-clip: text;
+  letter-spacing: 0.5px;
 }
 
+/* Global Festival Button */
 .onam-btn {
-    background: linear-gradient(90deg, #ffcc00, #ff9933);
-    border: none;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: linear-gradient(135deg, #EA580C, #F59E0B);
+  border: none;
+  color: #FFFFFF !important;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .onam-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #F97316, #FBBF24);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.35);
+  color: #FFFFFF;
+}
+
+.onam-btn:active {
+  transform: translateY(0);
+}
+
+/* Global Form Input Styling */
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 10px 14px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 0.95rem;
+  background-color: #FFFFFF;
+  color: #18181B;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #EA580C;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  outline: none;
+}
+
+/* Global Card Container */
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }

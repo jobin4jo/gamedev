@@ -12,7 +12,9 @@ export class RegisterationDashboardComponent {
   playerForm!: FormGroup;
   isError: boolean = false;
   playerResponse!: any;
-  errorMessage:any;
+  errorMessage: any;
+  existingPlayerWarning: any = null;
+  private searchTimeout: any;
 
   constructor(private fb: FormBuilder, private player: GameService, private loadingService: LoadingService) { }
 
@@ -21,6 +23,49 @@ export class RegisterationDashboardComponent {
       playerName: ['', Validators.required],
       place: ['', Validators.required],
     });
+
+    // Listen to playerName changes to check API for duplicate players in real-time
+    this.playerForm.get('playerName')?.valueChanges.subscribe((val: string) => {
+      this.onNameChange(val);
+    });
+  }
+
+  onNameChange(name: string) {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.existingPlayerWarning = null;
+
+    if (!name || name.trim().length < 2) {
+      return;
+    }
+
+    this.searchTimeout = setTimeout(() => {
+      this.player.searchUser(name.trim()).subscribe({
+        next: (res: any) => {
+          if (Array.isArray(res) && res.length > 0) {
+            // Find match
+            const match = res.find((u: any) => u.name && u.name.toLowerCase() === name.trim().toLowerCase()) || res[0];
+            if (match && match.userNumber) {
+              this.existingPlayerWarning = {
+                name: match.name,
+                userNumber: match.userNumber,
+                place: match.place || 'Unknown'
+              };
+            }
+          } else if (res && res.userNumber) {
+            this.existingPlayerWarning = {
+              name: res.name,
+              userNumber: res.userNumber,
+              place: res.place || 'Unknown'
+            };
+          }
+        },
+        error: () => {
+          this.existingPlayerWarning = null;
+        }
+      });
+    }, 400);
   }
 
   onSubmit() {

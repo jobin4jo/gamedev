@@ -1,0 +1,240 @@
+<div class="self-reg-wrapper">
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <!-- Main Card Container -->
+  <div class="self-reg-card">
+
+    <!-- Header & Church Branding -->
+    <div class="card-header-brand">
+      <div class="emblem-box">
+        <span class="emblem-emoji">🪷</span>
+      </div>
+      <h1 class="brand-title">Onam Games 2026</h1>
+      <p class="brand-org">St. Little Flower Syrian MSC Church Pushpagiri • MCYM</p>
+    </div>
+
+    <!-- ==============================================
+         STATE 1: REGISTRATION FORM (BEFORE SUBMIT)
+         ============================================== -->
+    <div *ngIf="!submittedToken" class="form-container">
+      <div class="section-badge">
+        <i class="bi bi-qr-code-scan"></i>
+        <span>Participant Self-Registration</span>
+      </div>
+      <p class="section-desc">
+        Enter your details below to generate your registration token. Show the token at the counter to activate your player number.
+      </p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Player Name -->
+        <div class="form-group mb-3">
+          <label class="form-label"><i class="bi bi-person-fill"></i> Player Full Name <span class="req">*</span></label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="name"
+                 placeholder="e.g. Rahul Mathew" />
+          <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-danger small mt-1">
+            Player name is required (min 2 characters).
+          </div>
+          <!-- Registered Player Alert -->
+          <div *ngIf="existingPlayerMatch" class="alert alert-info p-2 mt-2 small d-flex align-items-center gap-2 mb-0">
+            <i class="bi bi-info-circle-fill text-info fs-6"></i>
+            <div>
+              <strong>{{ existingPlayerMatch.name }}</strong> is already registered with <strong>Player #{{ existingPlayerMatch.userNumber }}</strong> ({{ existingPlayerMatch.place }}).
+            </div>
+          </div>
+          <!-- Pending Token Alert -->
+          <div *ngIf="existingPendingToken" class="alert alert-warning p-2 mt-2 small d-flex align-items-center justify-content-between gap-2 mb-0">
+            <div>
+              <i class="bi bi-ticket-detailed-fill text-warning me-1"></i>
+              You already have a pending token <strong>{{ existingPendingToken.id }}</strong> for {{ existingPendingToken.name }}.
+            </div>
+            <button type="button" class="btn btn-warning btn-sm py-0 px-2 fw-bold" (click)="restoreToken(existingPendingToken)">
+              View Token
+            </button>
+          </div>
+        </div>
+
+        <!-- Place / Parish Unit -->
+        <div class="form-group mb-3">
+          <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Place / Unit <span class="req">*</span></label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="place"
+                 placeholder="e.g. Pushpagiri / Ward 4" />
+          <div *ngIf="registerForm.get('place')?.touched && registerForm.get('place')?.invalid" class="text-danger small mt-1">
+            Place is required.
+          </div>
+        </div>
+
+        <!-- Phone Number (Optional) -->
+        <div class="form-group mb-4">
+          <label class="form-label"><i class="bi bi-telephone-fill"></i> Mobile Number <span class="opt">(Optional)</span></label>
+          <input type="tel"
+                 class="form-control"
+                 formControlName="phone"
+                 placeholder="10-digit mobile number"
+                 maxlength="10" />
+          <div *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid" class="text-danger small mt-1">
+            Please enter a valid 10-digit phone number.
+          </div>
+        </div>
+
+        <!-- Registration Fee Banner -->
+        <div class="fee-notice-banner mb-4">
+          <div class="fee-left">
+            <span class="fee-label">Entry Fee</span>
+            <span class="fee-amount">₹50</span>
+          </div>
+          <div class="fee-right">
+            <span class="fee-note">Payable in Cash / UPI at Counter</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="btn btn-submit-reg w-100"
+                [disabled]="registerForm.invalid || isSubmitting">
+          <span *ngIf="!isSubmitting">
+            <i class="bi bi-ticket-perforated-fill me-1"></i> Generate Registration Token
+          </span>
+          <span *ngIf="isSubmitting">
+            <i class="bi bi-hourglass-split me-1"></i> Generating Token...
+          </span>
+        </button>
+      </form>
+    </div>
+
+
+    <!-- ==============================================
+         STATE 2: TOKEN GENERATED & PENDING PAYMENT
+         ============================================== -->
+    <div *ngIf="submittedToken && submittedToken.status !== 'paid'" class="token-container">
+      <div class="token-badge-status pending">
+        <span class="status-dot-pulse"></span>
+        <span>Awaiting Payment at Cash Counter</span>
+      </div>
+
+      <div class="digital-token-card">
+        <div class="token-card-header">
+          <span class="token-subtitle">Digital Event Token</span>
+          <h2 class="token-number">{{ submittedToken.id }}</h2>
+        </div>
+
+        <div class="token-details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Player Name</span>
+            <span class="detail-value">{{ submittedToken.name }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Place</span>
+            <span class="detail-value">{{ submittedToken.place }}</span>
+          </div>
+          <div class="detail-item" *ngIf="submittedToken.phone">
+            <span class="detail-label">Phone</span>
+            <span class="detail-value">{{ submittedToken.phone }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Amount Due</span>
+            <span class="detail-value highlight">₹{{ submittedToken.amount }}</span>
+          </div>
+        </div>
+
+        <div class="token-instruction">
+          <div class="inst-icon">
+            <i class="bi bi-info-circle-fill"></i>
+          </div>
+          <div class="inst-text">
+            <strong>Next Step:</strong> Show this screen at the <strong>Onam Registration Desk</strong>. Once payment is collected, your <strong>Official Player Number</strong> will automatically appear here!
+          </div>
+        </div>
+
+        <!-- Live Sync Pulse -->
+        <div class="live-sync-bar">
+          <span class="sync-spinner"></span>
+          <span>Waiting for counter confirmation...</span>
+        </div>
+      </div>
+
+      <div class="token-actions mt-3">
+        <button class="btn btn-outline-secondary btn-sm w-100" (click)="registerAnother()">
+          <i class="bi bi-plus-circle me-1"></i> Register Another Person
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ==============================================
+         STATE 3: CONFIRMED & ACTIVE PLAYER (PAID)
+         ============================================== -->
+    <div *ngIf="submittedToken && submittedToken.status === 'paid'" class="confirmed-container">
+      <div class="success-confetti-header">
+        <div class="success-check-circle">
+          <i class="bi bi-check-lg"></i>
+        </div>
+        <h2 class="confirmed-title">Registration Confirmed!</h2>
+        <p class="confirmed-sub">Payment received • You are officially active</p>
+      </div>
+
+      <!-- Official Player Pass Card -->
+      <div class="official-pass-card">
+        <div class="pass-header">
+          <span class="pass-tag">OFFICIAL PLAYER PASS</span>
+          <span class="paid-badge"><i class="bi bi-check2-circle"></i> PAID</span>
+        </div>
+
+        <div class="pass-player-number-box">
+          <span class="number-label">PLAYER NUMBER</span>
+          <div class="big-player-number">
+            #{{ submittedToken.officialUserNumber }}
+          </div>
+        </div>
+
+        <div class="pass-info-list">
+          <div class="pass-info-row">
+            <span>Name:</span>
+            <strong>{{ submittedToken.name }}</strong>
+          </div>
+          <div class="pass-info-row">
+            <span>Place:</span>
+            <strong>{{ submittedToken.place }}</strong>
+          </div>
+          <div class="pass-info-row" *ngIf="submittedToken.paymentMode">
+            <span>Payment Mode:</span>
+            <strong class="text-uppercase">{{ submittedToken.paymentMode }}</strong>
+          </div>
+        </div>
+
+        <div class="pass-footer">
+          <span>St. Little Flower Church MCYM</span>
+          <button class="btn-print-pass" (click)="printReceipt()">
+            <i class="bi bi-printer-fill"></i> Print / Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="confirmed-actions mt-4">
+        <a class="btn btn-action btn-scoreboard" routerLink="/score-board">
+          <i class="bi bi-trophy-fill me-1"></i> View Live Scoreboard
+        </a>
+        <a class="btn btn-action btn-scorecheck" routerLink="/score-check">
+          <i class="bi bi-card-checklist me-1"></i> Check My Score
+        </a>
+        <button class="btn btn-outline-secondary w-100 mt-2" (click)="registerAnother()">
+          <i class="bi bi-plus-circle me-1"></i> New Registration
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer-branding">
+      <small>Developed by <strong>Jo4Tech Solutions</strong></small>
+    </div>
+
+  </div>
+
+</div>

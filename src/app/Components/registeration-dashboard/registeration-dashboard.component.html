@@ -12,8 +12,15 @@
           <input type="text" id="playerName" formControlName="playerName" class="form-control"
             placeholder="Enter player name">
           <div *ngIf="playerForm.get('playerName')?.touched && playerForm.get('playerName')?.invalid"
-            class="text-danger small">
+            class="text-danger small mt-1">
             Player Name is required
+          </div>
+          <!-- Duplicate Player Warning from API -->
+          <div *ngIf="existingPlayerWarning" class="alert alert-warning p-2 mt-2 small d-flex align-items-center gap-2 mb-0">
+            <i class="bi bi-exclamation-triangle-fill text-warning fs-6"></i>
+            <div>
+              Player <strong>{{ existingPlayerWarning.name }}</strong> (Player #{{ existingPlayerWarning.userNumber }}, {{ existingPlayerWarning.place }}) is already registered!
+            </div>
           </div>
         </div>
 
