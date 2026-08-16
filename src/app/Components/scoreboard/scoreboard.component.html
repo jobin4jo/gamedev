@@ -62,122 +62,204 @@
   </header>
 
 
-  <!-- Full Leaderboard Table -->
+  <!-- Full Leaderboard Table & Side QR Panel -->
   <section class="leaderboard-section">
-    <div class="leaderboard-card">
-      <div class="leaderboard-header-bar">
-        <h2 class="leaderboard-title">
-          <i class="bi bi-trophy"></i>
-          Full Leaderboard
-        </h2>
-        <div class="header-bar-right">
-          <div class="search-box">
-            <i class="bi bi-search search-icon"></i>
-            <input #searchInput type="text" class="search-input" placeholder="Search player # or name..."
-              (input)="onSearch($event)" />
-            <button *ngIf="searchTerm" type="button" class="btn-clear-search" (click)="clearSearch(searchInput)">
-              <i class="bi bi-x-circle-fill"></i>
-            </button>
+    <div class="leaderboard-layout-grid">
+
+      <!-- Main Table Card -->
+      <div class="leaderboard-card">
+        <div class="leaderboard-header-bar">
+          <h2 class="leaderboard-title">
+            <i class="bi bi-trophy"></i>
+            Full Leaderboard
+          </h2>
+          <div class="header-bar-right">
+            <div class="search-box">
+              <i class="bi bi-search search-icon"></i>
+              <input #searchInput type="text" class="search-input" placeholder="Search player # or name..."
+                (input)="onSearch($event)" />
+              <button *ngIf="searchTerm" type="button" class="btn-clear-search" (click)="clearSearch(searchInput)">
+                <i class="bi bi-x-circle-fill"></i>
+              </button>
+            </div>
+            <span class="player-count">
+              <i class="bi bi-people-fill"></i>
+              {{ players.length }} {{ players.length === 1 ? 'Player' : 'Players' }}
+            </span>
           </div>
-          <span class="player-count">
-            <i class="bi bi-people-fill"></i>
-            {{ players.length }} {{ players.length === 1 ? 'Player' : 'Players' }}
-          </span>
+        </div>
+
+        <div class="table-scroll-container">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th class="th-rank">#</th>
+                <th class="th-rank">Rank</th>
+                <th class="th-name">Player</th>
+                <th class="th-place">Place</th>
+                <th class="th-number">Number</th>
+                <th class="th-status">Status</th>
+                <th class="th-scores">Scores (G1–G5)</th>
+                <th class="th-total">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let player of players; let i = index; trackBy: trackByPlayer" class="player-row"
+                [ngClass]="player.rankClass" [style.animation-delay]="(i * 0.04) + 's'">
+                <td class="cell-sl">
+                  <span *ngIf="player.rank <= 3" class="sl-label" [ngClass]="'sl-label-' + player.rank">{{ player.rank
+                    }}</span>
+                  <span *ngIf="player.rank > 3">{{ player.rank }}</span>
+                </td>
+                <td class="cell-rank">
+                  <span *ngIf="player.rank <= 3" class="rank-badge" [ngClass]="'rank-badge-' + player.rank">
+                    <span *ngIf="player.rank === 1">🥇</span>
+                    <span *ngIf="player.rank === 2">🥈</span>
+                    <span *ngIf="player.rank === 3">🥉</span>
+                  </span>
+                  <span *ngIf="player.rank > 3">{{ player.rank }}</span>
+                </td>
+                <td class="cell-name">
+                  <div class="player-info">
+                    <div class="player-avatar" [ngClass]="player.rank <= 3 ? 'avatar-rank-' + player.rank : ''">
+                      {{ player.name?.charAt(0)?.toUpperCase() }}
+                    </div>
+                    <div class="player-meta">
+                      <span class="player-name-text">{{ player.name }}</span>
+                      <span class="player-place-sub" *ngIf="player.place">
+                        <i class="bi bi-geo-alt"></i> {{ player.place }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td class="cell-place">{{ player.place }}</td>
+                <td class="cell-number">
+                  <span class="number-badge">{{ player.userNumber }}</span>
+                </td>
+                <td class="cell-status">
+                  <span class="status-pill" [ngClass]="{
+                          'status-completed': player.status === 'Completed',
+                          'status-in-progress': player.status === 'In Progress',
+                          'status-not-played': player.status === 'Not Yet Played'
+                        }">
+                    <i class="bi" [ngClass]="{
+                         'bi-check-circle-fill': player.status === 'Completed',
+                         'bi-hourglass-split': player.status === 'In Progress',
+                         'bi-dash-circle': player.status === 'Not Yet Played'
+                       }"></i>
+                    {{ player.status }}
+                  </span>
+                </td>
+                <td class="cell-scores">
+                  <div class="score-chips">
+                    <span *ngFor="let s of player.points; let gi = index" class="score-chip"
+                      [ngClass]="{ 'chip-null': s === '-', 'chip-zero': s === 0, 'chip-high': s >= 8 }">
+                      <span class="chip-label">G{{ gi + 1 }}</span>
+                      <span class="chip-value">{{ s }}</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="cell-total">
+                  <div class="total-score-wrap">
+                    <span class="total-score">{{ player.totalPoints }}</span>
+                    <div class="score-bar">
+                      <div class="score-bar-fill"
+                        [style.width.%]="players[0]?.totalPoints ? (player.totalPoints / players[0].totalPoints * 100) : 0">
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="players.length === 0" class="no-results-row">
+                <td colspan="8" class="no-results-cell">
+                  <div class="empty-state">
+                    <i class="bi bi-search"></i>
+                    <p>No player found matching "<strong>{{ searchTerm }}</strong>"</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <div class="table-scroll-container">
-        <table class="leaderboard-table">
-          <thead>
-            <tr>
-              <th class="th-rank">#</th>
-              <th class="th-rank">Rank</th>
-              <th class="th-name">Player</th>
-              <th class="th-place">Place</th>
-              <th class="th-number">Number</th>
-              <th class="th-status">Status</th>
-              <th class="th-scores">Scores (G1–G5)</th>
-              <th class="th-total">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let player of players; let i = index; trackBy: trackByPlayer" class="player-row"
-              [ngClass]="player.rankClass" [style.animation-delay]="(i * 0.04) + 's'">
-              <td class="cell-sl">
-                <span *ngIf="player.rank <= 3" class="sl-label" [ngClass]="'sl-label-' + player.rank">{{ player.rank
-                  }}</span>
-                <span *ngIf="player.rank > 3">{{ player.rank }}</span>
-              </td>
-              <td class="cell-rank">
-                <span *ngIf="player.rank <= 3" class="rank-badge" [ngClass]="'rank-badge-' + player.rank">
-                  <span *ngIf="player.rank === 1">🥇</span>
-                  <span *ngIf="player.rank === 2">🥈</span>
-                  <span *ngIf="player.rank === 3">🥉</span>
-                </span>
-                <span *ngIf="player.rank > 3">{{ player.rank }}</span>
-              </td>
-              <td class="cell-name">
-                <div class="player-info">
-                  <div class="player-avatar" [ngClass]="player.rank <= 3 ? 'avatar-rank-' + player.rank : ''">
-                    {{ player.name?.charAt(0)?.toUpperCase() }}
-                  </div>
-                  <div class="player-meta">
-                    <span class="player-name-text">{{ player.name }}</span>
-                    <span class="player-place-sub" *ngIf="player.place">
-                      <i class="bi bi-geo-alt"></i> {{ player.place }}
-                    </span>
-                  </div>
+      <!-- Side QR Code Card beside Table (Fit Screen Height) -->
+      <div class="table-side-qr-card" *ngIf="qrCodeDataUrl">
+        <div class="qr-card-inner">
+
+          <div class="qr-card-top">
+            <div class="qr-emblem-badge">
+              <span class="qr-lotus">🪷</span>
+              <span class="qr-tag-text">Score Scanner</span>
+            </div>
+            <h3 class="qr-heading">Check Your Score</h3>
+            <p class="qr-subheading">Live results on your phone</p>
+          </div>
+
+          <div class="qr-box">
+            <img [src]="qrCodeDataUrl" alt="Score Check QR Code" class="qr-img" />
+            <div class="qr-corner corner-tl"></div>
+            <div class="qr-corner corner-tr"></div>
+            <div class="qr-corner corner-bl"></div>
+            <div class="qr-corner corner-br"></div>
+            <div class="qr-scan-line"></div>
+          </div>
+
+          <!-- How to Use Step-by-Step Guide -->
+          <div class="qr-steps-guide">
+            <div class="step-guide-title">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>How to Check</span>
+            </div>
+            <div class="step-list">
+              <div class="step-item">
+                <span class="step-num">1</span>
+                <span class="step-txt">Open phone camera or QR scanner</span>
+              </div>
+              <div class="step-item">
+                <span class="step-num">2</span>
+                <span class="step-txt">Scan code & tap the link</span>
+              </div>
+              <div class="step-item">
+                <span class="step-num">3</span>
+                <span class="step-txt">Enter your <strong>Player #</strong> for scores</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top 3 Leaders Spotlight at the Bottom of Scanner -->
+          <div class="top-leaders-panel" *ngIf="allPlayers && allPlayers.length > 0">
+            <div class="top-leaders-title">
+              <i class="bi bi-trophy-fill"></i>
+              <span>Current Top 3</span>
+            </div>
+            <div class="top-leaders-list">
+              <div *ngFor="let leader of allPlayers.slice(0, 3)" class="top-leader-item" [ngClass]="'leader-rank-' + leader.rank">
+                <div class="leader-medal">
+                  <span *ngIf="leader.rank === 1">🥇</span>
+                  <span *ngIf="leader.rank === 2">🥈</span>
+                  <span *ngIf="leader.rank === 3">🥉</span>
                 </div>
-              </td>
-              <td class="cell-place">{{ player.place }}</td>
-              <td class="cell-number">
-                <span class="number-badge">{{ player.userNumber }}</span>
-              </td>
-              <td class="cell-status">
-                <span class="status-pill" [ngClass]="{
-                        'status-completed': player.status === 'Completed',
-                        'status-in-progress': player.status === 'In Progress',
-                        'status-not-played': player.status === 'Not Yet Played'
-                      }">
-                  <i class="bi" [ngClass]="{
-                       'bi-check-circle-fill': player.status === 'Completed',
-                       'bi-hourglass-split': player.status === 'In Progress',
-                       'bi-dash-circle': player.status === 'Not Yet Played'
-                     }"></i>
-                  {{ player.status }}
-                </span>
-              </td>
-              <td class="cell-scores">
-                <div class="score-chips">
-                  <span *ngFor="let s of player.points; let gi = index" class="score-chip"
-                    [ngClass]="{ 'chip-null': s === '-', 'chip-zero': s === 0, 'chip-high': s >= 8 }">
-                    <span class="chip-label">G{{ gi + 1 }}</span>
-                    <span class="chip-value">{{ s }}</span>
-                  </span>
+                <div class="leader-info">
+                  <span class="leader-name">{{ leader.name }}</span>
+                  <span class="leader-num">#{{ leader.userNumber }}</span>
                 </div>
-              </td>
-              <td class="cell-total">
-                <div class="total-score-wrap">
-                  <span class="total-score">{{ player.totalPoints }}</span>
-                  <div class="score-bar">
-                    <div class="score-bar-fill"
-                      [style.width.%]="players[0]?.totalPoints ? (player.totalPoints / players[0].totalPoints * 100) : 0">
-                    </div>
-                  </div>
+                <div class="leader-pts">
+                  <strong>{{ leader.totalPoints }}</strong> <small>pts</small>
                 </div>
-              </td>
-            </tr>
-            <tr *ngIf="players.length === 0" class="no-results-row">
-              <td colspan="8" class="no-results-cell">
-                <div class="empty-state">
-                  <i class="bi bi-search"></i>
-                  <p>No player found matching "<strong>{{ searchTerm }}</strong>"</p>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="qr-card-bottom">
+            <div class="qr-footer-note">
+              <small>St. Little Flower Church Pushpagiri</small>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </section>
 

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription, switchMap } from 'rxjs';
 import { GameService } from 'src/app/services/game.service';
+import * as QRCode from 'qrcode';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-scoreboard',
@@ -15,14 +17,39 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   pointsArray: any[] = [];
   gamesPoint: any[] = [];
+  qrCodeDataUrl: string = '';
+  scoreCheckUrl: string = '';
+  isQrCollapsed: boolean = false;
   private subscription!: Subscription;
+  url = "https://gamedev-phi.vercel.app"
+
+  toggleQrPanel(): void {
+    this.isQrCollapsed = !this.isQrCollapsed;
+  }
   ngOnInit(): void {
     this.getPlayerDashBoard();
+    this.generateQrCode();
     this.subscription = interval(5000).pipe(
       switchMap(() => this.gameService.getScoreBoard())
     ).subscribe((data: any) => {
       this.handlePlayerData(data);   // ✅ move logic to a separate method
     });
+  }
+
+  async generateQrCode(): Promise<void> {
+    try {
+      this.scoreCheckUrl = `${this.url}/score-check`;
+      this.qrCodeDataUrl = await QRCode.toDataURL(this.scoreCheckUrl, {
+        width: 180,
+        margin: 1,
+        color: {
+          dark: '#18181B',
+          light: '#FFFFFF'
+        }
+      });
+    } catch (err) {
+      console.error('QR Code generation failed:', err);
+    }
   }
 
   onGetUpdate() {

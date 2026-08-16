@@ -11,11 +11,41 @@
         <div class="col-12 d-flex justify-content-center">
             <div class="card festival-card w-100 mx-3 p-4">
 
-                <!-- Input -->
-                <label for="userNumber" style="font-weight: bold;" class="form-label">User Number</label>
+                <!-- Input & Camera Scanner Button -->
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label for="userNumber" style="font-weight: bold;" class="form-label mb-0">Player Number</label>
+                    <button type="button" class="btn-camera-scan" (click)="toggleScanner()" [class.active]="isScanning">
+                        <i class="bi" [ngClass]="isScanning ? 'bi-camera-video-off' : 'bi-camera'"></i>
+                        <span>{{ isScanning ? 'Close Camera' : 'Scan with Camera' }}</span>
+                    </button>
+                </div>
+
+                <!-- In-Browser Camera Viewfinder -->
+                <div class="scanner-viewfinder-wrap" *ngIf="isScanning">
+                    <div class="scanner-box">
+                        <video #videoElement class="scanner-video" playsinline></video>
+                        <div class="scanner-overlay">
+                            <div class="scanner-target">
+                                <div class="corner c-tl"></div>
+                                <div class="corner c-tr"></div>
+                                <div class="corner c-bl"></div>
+                                <div class="corner c-br"></div>
+                                <div class="scanner-laser"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="scanner-tip">
+                        <i class="bi bi-qr-code-scan me-1"></i>
+                        Point camera at your QR Code or Number
+                    </p>
+                    <div class="scanner-error text-danger small text-center" *ngIf="scannerError">
+                        {{ scannerError }}
+                    </div>
+                </div>
+
                 <div class="input-group mb-4">
-                    <input type="number" id="userNumber" [(ngModel)]="userNumber" class="form-control "
-                        placeholder="Please Enter your Number" (input)="onInputChange()"/>
+                    <input type="number" id="userNumber" [(ngModel)]="userNumber" class="form-control"
+                        placeholder="Enter Player / Chest #" (input)="onInputChange()"/>
                     <button class="btn check-btn" [disabled]="!userNumber" (click)="checkScore()">Check</button>
                 </div>
 

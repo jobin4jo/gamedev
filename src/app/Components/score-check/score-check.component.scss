@@ -41,6 +41,132 @@
   font-size: 0.9rem;
 }
 
+/* ── Camera Scanner Button ── */
+.btn-camera-scan {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(234, 88, 12, 0.08);
+  color: #EA580C;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 0.88rem;
+  }
+
+  &:hover {
+    background: #EA580C;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+  }
+
+  &.active {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #DC2626;
+  }
+}
+
+/* ── Live Scanner Viewfinder ── */
+.scanner-viewfinder-wrap {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.25s ease-out;
+
+  .scanner-box {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    height: 220px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .scanner-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scanner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .scanner-target {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+  }
+
+  .corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: #EA580C;
+    border-style: solid;
+
+    &.c-tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+    &.c-tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; }
+    &.c-bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; }
+    &.c-br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+  }
+
+  .scanner-laser {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #EA580C, #F59E0B, transparent);
+    box-shadow: 0 0 10px rgba(234, 88, 12, 0.8);
+    animation: laserScan 2s infinite ease-in-out;
+  }
+
+  .scanner-tip {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #52525B;
+    margin: 8px 0 0;
+    text-align: center;
+
+    i {
+      color: #EA580C;
+    }
+  }
+}
+
+@keyframes laserScan {
+  0%, 100% {
+    top: 6px;
+    opacity: 0.3;
+  }
+  50% {
+    top: calc(100% - 8px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .input-group {
   .form-control {
     border-radius: 10px 0 0 10px;
