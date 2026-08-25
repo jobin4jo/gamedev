@@ -8,7 +8,7 @@ import { interval, Subscription } from 'rxjs';
   styleUrls: ['./count-down.component.scss']
 })
 export class CountDownComponent implements OnInit, OnDestroy {
-targetDate = new Date('2025-09-05T14:00:00');
+targetDate = new Date('2026-09-05T14:00:00');
 
   // UI values
   days = '00';
@@ -57,5 +57,9 @@ targetDate = new Date('2025-09-05T14:00:00');
   }
    launchApp() {
     this.router.navigate(['/score-check']); // Change route as needed
+  }
+
+  openRibbonCutting() {
+    this.router.navigate(['/inauguration']);
   }
 }

@@ -1,0 +1,284 @@
+<div class="inauguration-page scissors-cursor-active" 
+     [class.is-celebrating]="showCelebration"
+     (mousemove)="onMouseMove($event)"
+     (mousedown)="onMouseDown($event)"
+     (mouseleave)="onMouseLeave()"
+     (mouseenter)="onMouseEnter()">
+  <!-- Celebration Canvas for Petals & Confetti -->
+  <canvas #celebrationCanvas class="celebration-canvas" [class.active]="showCelebration"></canvas>
+
+  <!-- Interactive Golden Scissors Pointer Follower (Only on this screen) -->
+  <div class="scissors-cursor-follower"
+       [style.left.px]="cursorPos.x"
+       [style.top.px]="cursorPos.y"
+       [class.active]="isCursorInside"
+       [class.snipping]="isSnipping"
+       [class.cutting-action]="isCutting">
+    <div class="scissors-cursor-body">
+      <!-- Upper Blade & Handle Loop (Facing Right) -->
+      <div class="scissor-half upper-half">
+        <svg viewBox="0 0 70 35" class="half-svg">
+          <defs>
+            <linearGradient id="scisGold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFFDF0"/>
+              <stop offset="35%" stop-color="#FCD34D"/>
+              <stop offset="70%" stop-color="#F59E0B"/>
+              <stop offset="100%" stop-color="#B45309"/>
+            </linearGradient>
+            <linearGradient id="scisSteel" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="60%" stop-color="#E2E8F0"/>
+              <stop offset="100%" stop-color="#94A3B8"/>
+            </linearGradient>
+          </defs>
+          <!-- Left Gold Handle Ring -->
+          <path d="M34 17 C28 12 20 8 12 10 C4 12 0 20 4 27 C8 33 18 32 24 26 L34 20 Z" fill="url(#scisGold)" stroke="#78350F" stroke-width="1.5"/>
+          <ellipse cx="12" cy="19" rx="6" ry="5" fill="#FFFDF5" stroke="#92400E" stroke-width="1.2"/>
+          <!-- Sharp Top Blade pointing to the RIGHT at (70, 18) -->
+          <path d="M70 18 L32 12 L32 22 Z" fill="url(#scisSteel)" stroke="#475569" stroke-width="1"/>
+          <path d="M70 18 L32 12" stroke="url(#scisGold)" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <!-- Lower Blade & Handle Loop (Facing Right) -->
+      <div class="scissor-half lower-half">
+        <svg viewBox="0 0 70 35" class="half-svg">
+          <!-- Left Bottom Gold Handle Ring -->
+          <path d="M34 19 C28 24 20 28 12 26 C4 24 0 16 4 9 C8 3 18 4 24 10 L34 16 Z" fill="url(#scisGold)" stroke="#78350F" stroke-width="1.5"/>
+          <ellipse cx="12" cy="17" rx="6" ry="5" fill="#FFFDF5" stroke="#92400E" stroke-width="1.2"/>
+          <!-- Sharp Bottom Blade pointing to the RIGHT at (70, 18) -->
+          <path d="M70 18 L32 14 L32 24 Z" fill="url(#scisSteel)" stroke="#475569" stroke-width="1"/>
+          <path d="M70 18 L32 24" stroke="url(#scisGold)" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <!-- Center Pivot Screw with Ruby/Gem -->
+      <div class="scissor-pivot-joint">
+        <div class="pivot-dot"></div>
+      </div>
+      <span class="scissor-sparkle" *ngIf="isSnipping">✨</span>
+    </div>
+  </div>
+
+  <!-- Top Utilities Bar -->
+  <header class="top-nav">
+    <div class="brand">
+      <span class="pookkalam-icon">🌼</span>
+      <span class="brand-text">ONAMFEST 2026</span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-tab-btn" (click)="navigateTo('/Countdown')">
+        ⏱️ Countdown
+      </button>
+      <button class="nav-tab-btn" (click)="navigateTo('/score-board')">
+        🏆 Scoreboard
+      </button>
+      <button class="nav-tab-btn" (click)="navigateTo('/score-check')">
+        📱 Score Check
+      </button>
+      <button class="icon-btn" (click)="toggleSound()" [title]="isMuted ? 'Unmute Fanfare' : 'Mute Fanfare'">
+        <span *ngIf="!isMuted">🔊 Sound On</span>
+        <span *ngIf="isMuted">🔇 Sound Off</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Festive Kerala Toran & Floral Garlands -->
+  <div class="festive-garland-bar">
+    <div class="garland-leaf" *ngFor="let leaf of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]">
+      <span class="marigold-flower">🟡</span>
+      <span class="mango-leaf">🍃</span>
+    </div>
+  </div>
+
+  <!-- Main Stage Container -->
+  <main class="stage-container">
+    <!-- Left Nilavilakku (Traditional Kerala Brass Lamp) -->
+    <div class="nilavilakku lamp-left">
+      <div class="lamp-glow"></div>
+      <div class="lamp-flames">
+        <span class="flame flame-1">🔥</span>
+        <span class="flame flame-2">🔥</span>
+        <span class="flame flame-3">🔥</span>
+      </div>
+      <div class="lamp-top-spire"></div>
+      <div class="lamp-oil-tray"></div>
+      <div class="lamp-stem"></div>
+      <div class="lamp-base"></div>
+      <div class="lamp-label">ഐശ്വര്യം</div>
+    </div>
+
+    <!-- Central Grand Inaugural Arch -->
+    <div class="ceremony-card" [class.card-unveiled]="isCut">
+      <!-- Decorative Corner Motifs -->
+      <div class="corner-motif top-left">⚜️</div>
+      <div class="corner-motif top-right">⚜️</div>
+      <div class="corner-motif bottom-left">⚜️</div>
+      <div class="corner-motif bottom-right">⚜️</div>
+
+      <!-- Header Section -->
+      <div class="ceremony-header">
+        <div class="festive-badge">
+          <span class="sparkle">✨</span>
+          GRAND INAUGURATION CEREMONY
+          <span class="sparkle">✨</span>
+        </div>
+        <h1 class="main-title">{{ eventName }}</h1>
+        <p class="subtitle">{{ eventSubtitle }}</p>
+        <div class="dignitary-badge">
+          <span class="badge-icon">🏛️</span>
+          <span>{{ dignitaryTitle }}</span>
+        </div>
+      </div>
+
+      <!-- RIBBON & SCISSORS STAGE -->
+      <div class="ribbon-stage" [class.cut-done]="isCut">
+        <!-- Background Reveal Message (Visible when ribbon splits) -->
+        <div class="reveal-content" [class.show]="isCut">
+          <div class="triumphant-header">
+            <span class="triumphant-emoji">🎉</span>
+            <h2>OFFICIALLY INAUGURATED!</h2>
+            <span class="triumphant-emoji">🎊</span>
+          </div>
+          <p class="triumphant-text">
+            The games are declared open! Wishing all teams good luck and a Joyous Onam celebration!
+          </p>
+        </div>
+
+        <!-- Left Ribbon Segment -->
+        <div class="ribbon-segment ribbon-left" [class.cut-left]="isCut">
+          <div class="ribbon-texture">
+            <span class="ribbon-trim top-trim"></span>
+            <span class="ribbon-text">HAPPY ONAM 2026</span>
+            <span class="ribbon-trim bottom-trim"></span>
+          </div>
+          <div class="ribbon-fringe fringe-left"></div>
+        </div>
+
+        <!-- Central Rosette Bow & Cutting Zone -->
+        <div class="cutting-center" [class.bow-fallen]="isCut" (click)="cutRibbon()">
+          <div class="rosette-bow">
+            <div class="bow-loop loop-left"></div>
+            <div class="bow-loop loop-right"></div>
+            <div class="bow-center-knot">
+              <span class="knot-star">🌸</span>
+            </div>
+            <div class="bow-ribbon-tail tail-left"></div>
+            <div class="bow-ribbon-tail tail-right"></div>
+          </div>
+
+          <!-- Interactive Golden Scissors -->
+          <div class="scissors-wrapper" [class.snipping]="isCutting" [class.cut-complete]="isCut">
+            <div class="scissor-blade blade-top"></div>
+            <div class="scissor-blade blade-bottom"></div>
+            <div class="scissor-pivot"></div>
+            <div class="scissor-glow"></div>
+          </div>
+
+          <!-- Interactive Click Prompt -->
+          <div class="cut-prompt" *ngIf="!isCut && !isCutting">
+            <div class="pulse-ring"></div>
+            <span class="prompt-text">✂️ CLICK TO CUT RIBBON</span>
+          </div>
+        </div>
+
+        <!-- Right Ribbon Segment -->
+        <div class="ribbon-segment ribbon-right" [class.cut-right]="isCut">
+          <div class="ribbon-texture">
+            <span class="ribbon-trim top-trim"></span>
+            <span class="ribbon-text">PUSHPAGIRI GAMES</span>
+            <span class="ribbon-trim bottom-trim"></span>
+          </div>
+          <div class="ribbon-fringe fringe-right"></div>
+        </div>
+      </div>
+
+      <!-- Action Button for mobile / explicit trigger -->
+      <div class="ceremony-actions" *ngIf="!isCut">
+        <button class="cut-btn-gold" (click)="cutRibbon()" [disabled]="isCutting">
+          <span class="btn-icon">✂️</span>
+          <span class="btn-text">{{ isCutting ? 'Cutting Ribbon...' : 'Perform Inauguration Cut' }}</span>
+        </button>
+      </div>
+
+      <!-- POST-CUT LAUNCHPAD & APP HUBS -->
+      <div class="launchpad-section" *ngIf="isCut">
+        <h3 class="launchpad-heading">🚀 Explore Event Portals</h3>
+        <div class="launchpad-grid">
+          <!-- Card 1: Score Check -->
+          <div class="portal-card" (click)="navigateTo('/score-check')">
+            <div class="portal-icon-box score-box">
+              <span class="portal-icon">📱</span>
+            </div>
+            <div class="portal-info">
+              <h4>QR Score Check</h4>
+              <p>Scan participant QR codes & check individual/team points</p>
+            </div>
+            <span class="portal-arrow">→</span>
+          </div>
+
+          <!-- Card 2: Registration -->
+          <div class="portal-card" (click)="navigateTo('/self-register')">
+            <div class="portal-icon-box register-box">
+              <span class="portal-icon">📝</span>
+            </div>
+            <div class="portal-info">
+              <h4>Self Registration</h4>
+              <p>Register participants for Onam games & events</p>
+            </div>
+            <span class="portal-arrow">→</span>
+          </div>
+
+          <!-- Card 3: Scoreboard -->
+          <div class="portal-card" (click)="navigateTo('/score-board')">
+            <div class="portal-icon-box board-box">
+              <span class="portal-icon">🏆</span>
+            </div>
+            <div class="portal-info">
+              <h4>Live Scoreboard</h4>
+              <p>View real-time event standings & top winners</p>
+            </div>
+            <span class="portal-arrow">→</span>
+          </div>
+
+          <!-- Card 4: Admin / Manager -->
+          <div class="portal-card" (click)="navigateTo('/admin')">
+            <div class="portal-icon-box admin-box">
+              <span class="portal-icon">⚙️</span>
+            </div>
+            <div class="portal-info">
+              <h4>Admin Dashboard</h4>
+              <p>Manage games, scoring rules, and overall festival settings</p>
+            </div>
+            <span class="portal-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="ceremony-replay-bar">
+          <button class="replay-btn" (click)="replayCeremony()">
+            <span>🔄 Replay Ribbon Ceremony</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Festive Footer inside card -->
+      <div class="ceremony-footer">
+        <div class="footer-tradition">🌸 തിരുവോണാശംസകൾ • HAPPY ONAM 🌸</div>
+        <div class="footer-credit">Developed with ❤️ by JO4Tech Team</div>
+      </div>
+    </div>
+
+    <!-- Right Nilavilakku (Traditional Kerala Brass Lamp) -->
+    <div class="nilavilakku lamp-right">
+      <div class="lamp-glow"></div>
+      <div class="lamp-flames">
+        <span class="flame flame-1">🔥</span>
+        <span class="flame flame-2">🔥</span>
+        <span class="flame flame-3">🔥</span>
+      </div>
+      <div class="lamp-top-spire"></div>
+      <div class="lamp-oil-tray"></div>
+      <div class="lamp-stem"></div>
+      <div class="lamp-base"></div>
+      <div class="lamp-label">സമൃദ്ധി</div>
+    </div>
+  </main>
+</div>

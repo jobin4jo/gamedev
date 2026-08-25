@@ -14,6 +14,7 @@ import { SnackbarComponent } from './utility/snackbar/snackbar.component';
 import { ScoreCheckComponent } from './Components/score-check/score-check.component';
 import { CountDownComponent } from './Components/count-down/count-down.component';
 import { SelfRegisterComponent } from './Components/self-register/self-register.component';
+import { RibbonCuttingComponent } from './Components/ribbon-cutting/ribbon-cutting.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { SelfRegisterComponent } from './Components/self-register/self-register.
     ScoreCheckComponent,
     CountDownComponent,
     SelfRegisterComponent,
+    RibbonCuttingComponent,
   ],
   imports: [
     BrowserModule,

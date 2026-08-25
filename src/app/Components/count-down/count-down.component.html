@@ -8,8 +8,8 @@
 
         <div class="body">
             <div class="app-row">
-                <div class="app-name">ONAMFEST APP</div>
-                <div class="badge" *ngIf="!isLive">Starts: 05-09-2025</div>
+                <div class="app-name">ONAMFEST APP 2026</div>
+                <div class="badge" *ngIf="!isLive">Starts: 05-09-2026</div>
                 <div class="badge live" *ngIf="isLive">Now Live!</div>
             </div>
 
@@ -31,14 +31,22 @@
                     <div class="label">Seconds</div>
                 </div>
             </div>
+
+            <!-- Inauguration Quick Action Tab / Button -->
+            <div class="launch-wrapper my-3">
+                <button class="launch-btn" (click)="openRibbonCutting()">
+                    ✂️ 🎀 Open Ribbon Cutting Inauguration
+                </button>
+            </div>
+
             <div *ngIf="isLive" class="launch-wrapper">
-                <button class="launch-btn" (click)="launchApp()">🚀 Launch App</button>
+                <button class="launch-btn secondary-launch-btn" (click)="launchApp()">🚀 Go to Score Check</button>
             </div>
 
             <ng-template #liveTemplate>
                 <div class="live-now">
                     <div class="live-dot" aria-hidden="true"></div>
-                    <div class="live-text">Now Live — Pushpagiri • 05-09-2025</div>
+                    <div class="live-text">Now Live — Pushpagiri • 05-09-2026</div>
                 </div>
             </ng-template>
 
